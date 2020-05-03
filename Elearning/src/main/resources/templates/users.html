@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head data-th-replace="fragements/head :: head">
+</head>
+
+
+<body ng-app="app" ng-controller="addUserController">
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+
+     Page Content
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+        <div class="card">
+            <div class="card-block">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                 <tr th:each ="user :${data}">
+                        <td th:text="${user.nom}"></td>
+                        <td th:text="${user.prenom}"></td>
+                        <td th:text="${user.email}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <ul class="nav nav-pills">
+                    <li class="nav-item" th:each="i :${#numbers.sequence(0,data.totalPages-1)}">
+                        <a th:href="@{/users(page=${i})}" th:text="${i}" class="nav-link" th:classappend="${currentPage}==${i}?'active':''" ></a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+
+</body>
+</html>
