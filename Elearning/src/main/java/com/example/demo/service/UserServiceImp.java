@@ -7,6 +7,7 @@ import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,24 +15,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImp implements UserService {
-	
+	@Autowired
+	private UserRepository userRepository;
 
-	PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	@Autowired
-	RoleRepository roleRepository;
-	@Autowired
-	UserRepository userRepository;
+
 
 	@Override
-	public void saveUser(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
-		user.setActived(true);
-		userRepository.save(user);
+	public Iterable<User> findAll() {
+		return userRepository.findAll();
 	}
 
 	@Override
-	public boolean isUserAlreadyPresent(User user) {
-		return false;
+	public User find(Long id) {
+		return userRepository.findById(id).get();
 	}
 
+	@Override
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
+	@Override
+	public void delete(Long id) {
+		userRepository.deleteById(id);
+	}
 }

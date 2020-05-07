@@ -22,17 +22,16 @@ public class DemoApplication {
         ApplicationContext ctx=SpringApplication.run(DemoApplication.class, args);
 
 
-      /*  RoleRepository roleRepository=ctx.getBean(RoleRepository.class);
+       /* RoleRepository roleRepository=ctx.getBean(RoleRepository.class);
         roleRepository.save(new Role("ADMIN", "administrateur"));
         roleRepository.save(new Role("PROF", "professeur"));
         roleRepository.save(new Role("ETUDIANT", "etudiant"));
-
-
-        UserRepository userRepository=ctx.getBean(UserRepository.class );
-        userRepository.save(new User("admin", encoder.encode("admin"),"ab", "kh",true ));
-        userRepository.save(new User("etu", encoder.encode("etu"),"aa", "cc",true));
 */
 
+   /*     UserRepository userRepository=ctx.getBean(UserRepository.class );
+        userRepository.save(new User("admin@gmail.com", encoder.encode("admin"),"ab", "kh","F",true));
+
+*/
 
     }
 

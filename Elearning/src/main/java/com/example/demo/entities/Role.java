@@ -11,11 +11,15 @@ public class Role  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NaturalId
+
+    @Column(unique = true)
     private String role;
+
     private String description;
+
     @OneToMany(mappedBy = "role")
     private Collection<User> users;
+
     public Role() {
     }
 
