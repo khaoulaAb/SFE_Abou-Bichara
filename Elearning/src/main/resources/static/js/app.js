@@ -23,13 +23,12 @@ $(document).ready(function(){
 */
 
 $(document).ready(function(){
-    $(' .nBtn, .table .eBtn').on('click', function(event){
+    $('.table .eBtn').on('click', function(event){
         event.preventDefault();
         var href = $(this).attr('href');
-        var text = $(this).text();
-        if(text=='Edit') {
 
             $.get(href, function (user, status) {
+                $('.myForm #id').val(user.id);
                 $('.myForm #nom').val(user.nom);
                 $('.myForm #prenom').val(user.prenom);
                 $('.myForm #genre').val(user.genre);
@@ -39,17 +38,21 @@ $(document).ready(function(){
 
             });
 
-            $('.myForm #exampleModal').modal();
-        }else{
+            $('.myForm #exampleModalUp').modal();
+    });
 
+    $('.newBtn').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+            $('.myForm #id').val('');
             $('.myForm #nom').val('');
             $('.myForm #prenom').val('');
             $('.myForm #genre').val('');
             $('.myForm #email').val('');
             $('.myForm #role').val('');
             $('.myForm #exampleModal').modal();
-        }
-    });
+        });
+
 
     $('.table .delBtn').on('click', function(event){
         event.preventDefault();

@@ -1,15 +1,13 @@
 <nav id="sidebar" data-th-fragment="menu-sidebar">
     <div class="p-4 pt-5">
-        <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
+        <p href="#" class="img logo rounded-circle mb-5" >[[${#httpServletRequest.remoteUser}]]</p>
         <ul class="list-unstyled components mb-5">
             <li>
-                <a href="#">Accueil</a>
+                <a th:href="@{/}">Accueil</a>
             </li>
+
             <li>
-                <a href="#">Etudiants</a>
-            </li>
-            <li>
-                <a href="#">Professeurs</a>
+                <a th:href="@{/users}">Utilisateurs</a>
             </li>
             <li>
                 <a href="#">Ressources</a>
