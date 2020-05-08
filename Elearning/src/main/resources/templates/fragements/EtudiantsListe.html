@@ -1,0 +1,52 @@
+
+
+<div data-th-fragment="EtudiantsListe" class="modal fade" id="myModalEtu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                <div class="card-block">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each ="user :${userEtu}">
+                            <td th:text="${user.nom}"></td>
+                            <td th:text="${user.prenom}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td></td>
+
+                            <td> <a class="btn btn-primary eBtn" th:href="@{findUser/{id}(id=${user.id})}"><i class="fa fa-edit"></i>
+                            </a>
+
+                                <a  class="btn btn-danger delBtn" th:href="@{/users/{id}/delete(id=${user.id})}"><i class="fa fa-remove"></i></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+
+
+                </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href =""  class="btn btn-danger"  id="delRef">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+

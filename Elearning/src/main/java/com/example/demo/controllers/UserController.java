@@ -67,7 +67,12 @@ public class UserController {
     @GetMapping("/users")
     public String dashboard(Model model) {
         //display all Tasks
+
         Set<User> users = userService.getUsers();
+        Role role= roleRepository.findById(Long.parseLong("2")).get();
+        Set<User> userEtu =userService.getUserByRole(role);
+        model.addAttribute("userEtu", userEtu);
+
         model.addAttribute("data", users);
 
         model.addAttribute("roles", roleRepository.findAll());

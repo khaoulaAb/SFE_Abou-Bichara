@@ -60,4 +60,11 @@ $(document).ready(function(){
         $('#myModal #delRef').attr('href',href);
         $('#myModal').modal();
     });
+
+    $('.btnEtu').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('#myModalEtu #etu').attr('href',href);
+        $('#myModalEtu').modal();
+    });
 });

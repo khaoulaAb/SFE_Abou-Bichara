@@ -21,13 +21,36 @@
         </div>
     </div>
 
+
         <div class = "container">
 
-            <button class="btn btn-success newBtn "><i class="fas fa-plus-circle"></i>Ajouter</button>
+            <button class="btn btn-success newBtn "><i class="fa fa-plus"></i></button>
+            <br><br>
 
+            <nav class="navbar navbar-expand-lg navbar navbar-light bg-light">
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <button type="button" class="nav-link btn btn-warning btnEtu" id="etu">Etudiants</button>
+
+                        </li>
+
+                        <li class="nav-item active">
+                            <button type="button" class="nav-link btn btn-warning btnProf">Professeurs</button>
+                        </li>
+
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+            <br>
             <div class="card">
-                <br>
-                <br>
+
                 <div class="card-block">
 
                     <table class="table table-hover">
@@ -45,9 +68,11 @@
                             <td th:text="${user.prenom}"></td>
                             <td th:text="${user.email}"></td>
                             <td></td>
-                            <td> <a class="btn btn-primary eBtn" th:href="@{findUser/{id}(id=${user.id})}"><i class="fas fa-pencil-alt"></i> Modifier</a>
 
-                                <a  class="btn btn-danger delBtn" th:href="@{/users/{id}/delete(id=${user.id})}"><i class="fas fa-trash-alt"></i>Supprimer</a></td>
+                            <td> <a class="btn btn-primary eBtn" th:href="@{findUser/{id}(id=${user.id})}"><i class="fa fa-edit"></i>
+                            </a>
+
+                                <a  class="btn btn-danger delBtn" th:href="@{/users/{id}/delete(id=${user.id})}"><i class="fa fa-remove"></i></a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -69,6 +94,7 @@
                 <div data-th-replace="fragements/ajouter :: ajouter"></div>
                 <div data-th-replace="fragements/update :: update"></div>
 
+                <div data-th-replace="fragements/EtudiantsListe :: EtudiantsListe"></div>
 
             </div>
 
