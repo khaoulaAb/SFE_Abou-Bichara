@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -22,6 +23,7 @@ public class User implements Serializable {
     @Column(unique = true)
     @NotNull(message = "email est obligatoire")
     private String email;
+    private Date createdDate;
 
     @NotNull(message = "Mot de passe est obligatoire")
     @Size(min=10)
@@ -38,9 +40,12 @@ public class User implements Serializable {
 
     private boolean actived;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="role")
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade = CascadeType.ALL)
+    private Collection<Cours> cours;
 
 
     public User() {
@@ -119,4 +124,22 @@ public class User implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public Collection<Cours> getCours() {
+        return cours;
+    }
+
+    public void setCours(Collection<Cours> cours) {
+        this.cours = cours;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+
 }

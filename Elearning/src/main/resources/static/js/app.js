@@ -1,28 +1,7 @@
 
-
-
-/*
 $(document).ready(function(){
-    $('.table .eBtn').on('click',function (event) {
-        event.preventDefault();
-        var href=$(this).attr('href');
 
-
-      $.get(href,function (user,status) {
-            $('.myForm #nom').val(user.nom);
-            $('.myForm #prenom').val(user.prenom);
-            $('.myForm #email').val(user.id);
-            $('.myForm #password').val(user.password);
-            $('.myForm #role').val(user.role);
-
-        });
-
-        $('.myForm #exampleModal').modal();
-    });
-});
-*/
-
-$(document).ready(function(){
+    /************Users **********/
     $('.table .eBtn').on('click', function(event){
         event.preventDefault();
         var href = $(this).attr('href');
@@ -44,7 +23,6 @@ $(document).ready(function(){
     $('.newBtn').on('click', function(event){
         event.preventDefault();
         var href = $(this).attr('href');
-            $('.myForm #id').val('');
             $('.myForm #nom').val('');
             $('.myForm #prenom').val('');
             $('.myForm #genre').val('');
@@ -67,4 +45,21 @@ $(document).ready(function(){
         $('#myModalEtu #etu').attr('href',href);
         $('#myModalEtu').modal();
     });
+
+
+    /**********  Cours *************/
+
+    $('.btnAddCours').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('.myForm #id').val('');
+        $('.myForm #titre').val('');
+        $('.myForm #description').val('');
+        $('.myForm #files').val('');
+        $('.myForm #filiere').val('');
+        $('.myForm #exampleModalCours').modal();
+    });
+
+
+
 });

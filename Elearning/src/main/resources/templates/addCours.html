@@ -1,0 +1,151 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head data-th-fragment="head">
+
+
+
+
+
+</head>
+
+<style>
+    .imagecontainer{
+        position: relative;
+        width:100% ;
+        max-width: 400px;
+    }
+    .overlay{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right:0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .3s ease;
+        border-radius: 50%;
+    }
+
+    .imagecontainer:hover .overlay{
+        opacity: 1;
+    }
+    .icon{
+        color:white;
+        font-size: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        -moz-transform:translate(-50%,-50%) ;
+    }
+
+    .fa-trash:hover{
+        color: red;
+    }
+</style>
+</head>
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+
+        <!--- -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <!-- form card register -->
+                            <div class="card card-outline-secondary">
+                                <div class="card-header">
+                                    <h3 class="text-center mb-5">Ajouter un cours</h3>
+                                </div>
+                                <div class="card-body">
+
+                                    <form th:action="@{/update/{id}(id=${cours.id})}" th:object="${cours}" method="post" enctype="multipart/form-data" class="form" role="form" autocomplete="off">
+                                        <div class="form-group">
+                                            <label for="inputName">Titre</label>
+                                            <input type="text" class="form-control" id="inputName" placeholder="titre" th:field="*{titre}"  required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail3">Description</label>
+                                            <textarea class="form-control" id="inputEmail3" placeholder="Description" th:field="*{description}" required=""/>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="files">Fichiers</label>
+                                            <input type="file" class="form-control" id="files" placeholder="Upload Files" th:field="*{files}" multiple="multiple">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="filiere">Filiere</label><br>
+                                            <select class="form-control" th:field="*{filiere}" id="filiere"  required="">
+                                                <option th:each="filiere: ${filieres}"
+                                                        th:value="${filiere.getId()}"
+                                                        th:text="${filiere.getAbr()}"/>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <span th:each="file,itrstat : ${coursfiles}" class="imagecontainer" th:id="'imageindex'+${itrstat.index}">
+                                                <img th:src="@{'/files/'+${file.modifiedFileName}}" style="width:80px; height: 80px; border-radius: 10px;" class="image" th:if="${file.fileExtension=='jpeg' or file.fileExtension=='png'or file.fileExtension=='jpg' or file.fileExtension=='tiff' or file.fileExtension=='gif' }"/>
+                                                <img th:src="@{'/files/'+${file.modifiedFileName}}"  class="image" th:if="${file.fileExtension!='jpeg' and file.fileExtension!='png'and file.fileExtension!='jpg' and file.fileExtension!='tiff' and file.fileExtension!='gif' }"/>
+                                                <span class="overlay">
+                                                    <a href="#" class="icon image-confirm-delete" title="image delete" th:attr="data-id=${itrstat.index},data-name=${file.modifiedFileName}">
+                                                        <i class="fa fa-trash" style="color: red"></i>
+                                                    </a>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <input type="hidden" class="form-control" th:field="*{removeImages}" id="removeImages">
+                                        <input type="hidden" class="form-control" th:field="*{id}">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success btn-lg float-right" >Enregistrer</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /form card register -->
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/col-->
+            </div>
+            <!--/row-->
+            <hr>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+<script type="text/javascript">
+    var images=[];
+    $('.image-confirm-delete').on('click', function(e){
+        e.preventDefault();
+        var id= $(this).data('id');
+        var name=$(this).data('name');
+        images.push(name);
+        $('#removeImages').val(images);
+        $('#imageindex'+id).hide();
+
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -3,40 +3,50 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-align: center">Modifier un utilisateur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="id" name="id" value="" />
+                        <input type="hidden" class="form-control" id="id" name="id" value=""/>
                     </div>
                     <div class="form-group">
                         <label for="nom" class="form-control-label">Nom:</label>
-                        <input type="text" class="form-control" id="nom" name="nom" value="" />
+                        <input type="text" class="form-control" id="nom" name="nom" value="" required="" />
                     </div>
 
                     <div class="form-group">
                         <label for="prenom" class="form-control-label">Prenom:</label>
-                        <input type="text" class="form-control" id="prenom" name="prenom" value="" />
-                    </div>
-                    <div class="form-group">
-                        <label for="genre" class="form-control-label">genre:</label>
-                        <input type="text" class="form-control" id="genre" name="genre" value="" />
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="form-control-label">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="" />
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="form-control-label">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" value="" />
+                        <input type="text" class="form-control" id="prenom" name="prenom" value="" required=""/>
                     </div>
 
                     <div class="form-group">
-                        <select id="role" name="role" >
+
+                        <input type="radio" id="F" name="genre" value="F"
+                               checked>
+                        <label for="F">F</label>
+
+
+
+                        <input type="radio" id="M" name="genre" value="M">
+                        <label for="M">M</label>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-control-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" value=""  required=""/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-control-label">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" value=""  required=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="form-control-label">Role:</label><br>
+                        <select name="role" id="role"  required="">
                             <option th:each="role: ${roles}"
                                     th:value="${role.id}"
                                     th:text="${role.role}"/>
@@ -45,8 +55,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="save" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-primary" value="Modifier" />
                 </div>
             </div>
         </div>

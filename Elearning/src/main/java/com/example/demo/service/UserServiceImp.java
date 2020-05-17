@@ -8,6 +8,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -38,6 +39,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public User createUser(User user) {
 		user.setPassword(encoder.encode(user.getPassword()));
+		user.setCreatedDate(new Date());
 		user.setActived(true);
 		User newUser= userRepository.save(user);
 
@@ -47,7 +49,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public User updateUser(Long id, User user) {
 		User Olduser= findById(id);
-
+		Olduser.setCreatedDate(new Date());
 		Olduser.setNom(user.getNom());
 		Olduser.setPrenom(user.getPrenom());
 		Olduser.setGenre(user.getGenre());

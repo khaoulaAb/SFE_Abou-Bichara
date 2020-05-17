@@ -1,18 +1,19 @@
-<nav id="sidebar" data-th-fragment="menu-sidebar">
-    <div class="p-4 pt-5">
+<nav id="sidebar"  data-th-fragment="menu-sidebar">
+    <div class="p-4 pt-5" style="position: fixed; width: 300px;" >
+
         <p href="#" class="img logo rounded-circle mb-5" >[[${#httpServletRequest.remoteUser}]]</p>
         <ul class="list-unstyled components mb-5">
             <li>
                 <a th:href="@{/}">Accueil</a>
             </li>
 
-            <li id="navbarDropdown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <a th:href="@{/users}">Utilisateurs</a>
+            <li >
+                <a th:href="@{/users}">Utilisateur</a>
             </li>
 
 
             <li>
-                <a href="#">Ressources</a>
+                <a th:href="@{/cours}">Cours</a>
             </li>
             <li>
                 <a href="#">Filières</a>

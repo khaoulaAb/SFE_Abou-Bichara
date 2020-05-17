@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head data-th-replace="fragements/head :: head">
+
+
+</head>
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+        <div class = "container">
+            <div>
+            <a  th:href="@{/addCours}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+            </div>
+            <br>
+            <h3>Cours</h3>
+            <br>
+            <div class="row">
+
+                <div class="col-sm-4">
+
+                    <!-- Bordered Card -->
+                    <div class="card pmd-card">
+                        <div class="card-header d-flex flex-row pmd-card-border">
+
+                            <div class="media-body">
+                                <h3 class="card-title">Two-line item</h3>
+                                <p class="card-subtitle">Secondary text</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Cards provide context and an entry point to more robust information and views. Don't overload cards with extraneous information or actions.</p>
+                        </div>
+                        <div class="card-footer pmd-card-border">
+                            <button class="btn btn-primary " type="button"><i class="fa fa-info"></i></button>
+                            <button class="btn btn-primary " type="button"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger" type="button"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+</div>
+            <br><br>
+
+
+<!---->
+        </div>
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+</body>
+</html>

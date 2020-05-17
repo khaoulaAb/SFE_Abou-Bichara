@@ -1,0 +1,151 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head data-th-replace="fragements/head :: head">
+
+
+</head>
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+        <div class = "container">
+            <button class="btn btn-success btnAddCours "><i class="fa fa-plus"></i></button>
+            <h2 class="text-center mb-5">Liste des Cours</h2>
+            <nav class="navbar navbar-expand-lg navbar navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+
+
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+            <br>
+          <!--section    <section class="blog-list px-3 py-5 p-md-5" style="box-sizing: border-box;">
+                    <div class="alert alert-success" role="alert" th:if="${successMessage}">
+                        <strong th:text="${successMessage}"></strong>
+                    </div>
+                    <div class="alert alert-danger" role="alert" th:if="${errormessage}">
+                        <strong th:text="${errormessage}"></strong>
+                    </div>
+                    <div class="container">
+                        <div class="item mb-5" th:each="cours: ${Listcours}" style="box-shadow: 2px 2px 2px 2px #888888;">
+                            <div class="media">
+
+                                <div class="media-body" >
+                                    <h2 class="title mb-1" style="font-weight: bold; font-size: 2.5rem;" th:text="${cours.getTitre()}"></h2>
+
+                                    <div class="meta mb-1"><span class="date"  ><em style=" display: inline-block; color:#5b90bf;" th:text="'publié par :'+ ${cours.getUser().getNom()}+' '+${cours.getUser().getPrenom()}"></em></span><span class="time"> &nbsp  &nbsp</span>
+                                        <span class="comment"><em style=" display: inline-block; color:#5b90bf"  th:text="'Filière :'+ ${cours.getFiliere().getAbr()}" ></em></span>
+                                    </div>
+
+                                    <div class="intro text-justify" style="font-size: 1.2rem; line-height: 1.5;  font-family: sans-serif; " th:text="${cours.getDescription()}"></div><br>
+                                    <a class="btn btn-outline-primary" ><i class="fa fa-info"></i></a>
+
+                                    <a class="btn btn-primary  " th:href="@{/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
+
+                                    <a href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            -->
+
+            <div class="myForm">
+                <div data-th-replace="fragements/addCours :: addCours"></div>
+            </div>
+
+                <!--/container-->
+                <div class="alert alert-success" role="alert" th:if="${successMessage}">
+                    <strong th:text="${successMessage}"></strong>
+                </div>
+                <div class="alert alert-danger" role="alert" th:if="${errormessage}">
+                    <strong th:text="${errormessage}"></strong>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-4" th:each="cours: ${Listcours}" style="margin-bottom: 5%; " >
+
+                        <div class="card text-dark bg-light">
+
+                            <div class="card-header  text-left text-light"  style="background-color: #ccffb3"><h3 th:text="${cours.getTitre()}"></h3>
+                                <span class="date"  ><em style=" display: inline-block; color:olive;" th:text="'publié par :'+ ${cours.getUser().getNom()}+' '+${cours.getUser().getPrenom()}"></em></span><span class="time"> &nbsp  &nbsp</span>
+                                <span class="comment"><em style=" display: inline-block; color:olive"  th:text="'Filière :'+ ${cours.getFiliere().getAbr()}" ></em></span>
+                            </div>
+
+                            <div class="card-body overflow-auto"  style="height: 250px">
+                                <p class="card-text text-left text-justify" style="font-size: 1.2rem; line-height: 1.5;  font-family: sans-serif; " th:text="${cours.getDescription()}"> </p>
+                            </div>
+
+
+                            <div class="card-footer  border-warning text-right" style="background-color: #ccffb3" >
+
+
+                                    <span class="date text-left" >
+                                        <em style=" display: inline-block; color:olive;" th:text=" ${cours.getCreatedDate()}" >
+                                        </em>
+
+
+                                    </span>
+
+
+                                    <a class="btn btn-success"  th:href="@{/coursDetails/{id}(id=${cours.id})}"><i class="fa fa-info"></i></a>
+
+                                    <a class="btn btn-primary" th:href="@{/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
+
+                                 <a href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <br><br>
+
+
+                </div>
+
+
+        </div>
+</div>
+</div>
+
+<div class="modal fade" id="myModalCours" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                    Voulez-vous vraiment supprimer ce cours?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href ="" id="idModalLink" class="btn btn-danger"  >Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head data-th-replace="fragements/head :: head">
+
+
+</head>
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+        <div class = "container" th:each="cours: ${cours}" >
+            <a th:href="@{'/downloadfilesaszip/'+${cours.id}}" title="Télécharger tous les fichiers (.zip)" style="float: right;"><i class="fa fa-file-archive-o" aria-hidden="true" style="font-size: 32px;"></i></a>
+            <h2  th:text="${cours.getTitre()}" style="color: #959533; text-align: center"></h2>
+
+            <br>
+            <div class="row">
+                <div class="col-sm-12"  style="margin-bottom: 5%" >
+                    <div class="card text-dark bg-light">
+                        <div class="card-body"  style="height: auto">
+                            <p class="card-text text-left text-justify" style="font-size: 1.2rem; line-height: 1.5;  font-family: sans-serif; " th:text="${cours.getDescription()}"> </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-12"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension=='mp4'  }">
+                    <div class="card text-dark bg-light">
+                        <div class="card-body"  style="height: 500px; ">
+
+                            <video controls width="99%" height="99%" th:title="${file.modifiedFileName}">
+
+                                <source th:src="@{'/files/'+${file.modifiedFileName}}"
+                                        type="video/mp4">
+                            </video>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-4"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension=='jpeg' or file.fileExtension=='png'or file.fileExtension=='jpg' or file.fileExtension=='tiff' or file.fileExtension=='gif' }">
+
+                    <div class="card text-dark bg-light">
+                        <div class="card-body"  style="height: 400px; ">
+                            <img th:src="@{'/files/'+${file.modifiedFileName}}"  th:title="${file.modifiedFileName}" style="width:100%; height:100%; "  />
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="'/downloadFile/'+${file.nomFile}+'/'+${file.modifiedFileName}" class="btn btn-sm btn-success" title="télecharger ce fichier"  ><i class="fa fa-download" aria-hidden="true"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-3"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension!='jpeg' and file.fileExtension!='mp4' and file.fileExtension!='png'and file.fileExtension!='jpg' and file.fileExtension!='tiff' and file.fileExtension!='gif' }">
+                    <div class="card text-dark bg-light">
+                        <div class="card-body"  style="height: 150px">
+                            <img th:src="@{'/images/file.jpg'}"  th:title="${file.modifiedFileName}" th:alt="${file.modifiedFileName}" style="margin-left: 25%; width:100px; height: 80px; border-radius: 10px;" class=" image" />
+                            <p style="font-size: 12px; margin-bottom: 5%" th:text="${file.modifiedFileName}"  ></p>
+
+                        </div>
+                    </div>
+                        <div class="card-footer">
+                            <p>
+                            <a th:href="'/downloadFile/'+${file.nomFile}+'/'+${file.modifiedFileName}" class="btn btn-sm btn-success" title="télecharger ce fichier"  ><i class="fa fa-download" aria-hidden="true"></i></a>
+                            </p>
+                        </div>
+
+
+
+
+                </div>
+
+            </div>
+
+
+            <!---->
+        </div>
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+
+
+</body>
+</html>
