@@ -95,4 +95,10 @@ public class UserServiceImp implements UserService {
         userRepository.findAll().iterator().forEachRemaining(user::add);
         return user;
 	}
+
+
+	@Override
+	public String getUsersFiltred() {
+		return null;
+	}
 }

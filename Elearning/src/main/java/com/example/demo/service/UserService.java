@@ -21,6 +21,7 @@ public interface UserService {
     void  deleteUser(Long id);
 
     Set<User> getUserByRole(Role role);
-     Set<User> getUsers();
+    Set<User> getUsers();
 
+    String getUsersFiltred();
 }
