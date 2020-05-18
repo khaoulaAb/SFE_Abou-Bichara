@@ -55,8 +55,9 @@ public class CoursServiceImp implements CoursService {
         Set<User> users = userService.getUsers();
         User u = new User();
         for (User user : users) {
-            user.getEmail().equals(email);
-            u.setId(user.getId());
+            if(user.getEmail().equals(email)){
+                u=user;
+            }
         }
         cours.setCreatedDate(new Date());
 
@@ -116,8 +117,9 @@ public class CoursServiceImp implements CoursService {
         Set<User> users = userService.getUsers();
         User u = new User();
         for (User user : users) {
-            user.getEmail().equals(email);
-            u.setId(user.getId());
+            if(user.getEmail().equals(email)){
+                u=user;
+            }
         }
 
         cours.setUser(u);

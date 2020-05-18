@@ -4,11 +4,13 @@ import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public interface UserService {
-    Set<User> getUsers();
+    List<User> getListUsers(HttpServletRequest httpServletRequest);
 
     User findById(Long id);
 
@@ -19,5 +21,6 @@ public interface UserService {
     void  deleteUser(Long id);
 
     Set<User> getUserByRole(Role role);
+     Set<User> getUsers();
 
 }

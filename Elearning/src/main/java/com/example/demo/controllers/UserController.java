@@ -14,50 +14,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.HashSet;
+
+import java.util.List;
 import java.util.Set;
 
 @Controller
 public class UserController {
 
 
-   /* PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @GetMapping("/users")
-    public String findAll(Model model/*, @RequestParam(defaultValue = "0") int page *//* ){
-       model.addAttribute("roles",roleRepository.findAll());
-        model.addAttribute("data", userRepository.findAll(/*PageRequest.of(page,4)*/ /*));
-       // model.addAttribute("currentPage", page);
-       return "users";
-    }
-
-    @PostMapping("/save")
-    public String save(@Valid  User user, BindingResult bindingResult, Model model){
-        user.setActived(true);
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        model.addAttribute("user",user);
-        return "redirect:/users";
-    }
-    @GetMapping("/delete")
-    public String deleteCountry(Long id){
-        userRepository.deleteById(id);
-
-        return "redirect:/users";
-    }
-    @GetMapping("/findOne")
-    @ResponseBody
-    public User findOne(Long id){
-        return userRepository.findById(id).get();
-    }
-*/
 
     @Autowired
     private UserService userService;
@@ -65,10 +30,10 @@ public class UserController {
     private RoleRepository roleRepository;
 
     @GetMapping("/users")
-    public String dashboard(Model model) {
+    public String dashboard(Model model,HttpServletRequest httpServletRequest) {
         //display all Tasks
 
-        Set<User> users = userService.getUsers();
+        List<User> users = userService.getListUsers(httpServletRequest);
         Role role= roleRepository.findById(Long.parseLong("2")).get();
         Set<User> userEtu =userService.getUserByRole(role);
         model.addAttribute("userEtu", userEtu);
