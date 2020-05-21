@@ -57,7 +57,7 @@ public class SpringFileUploadController {
        }
     }
 
-    @GetMapping("/editcours/{coursId}")
+    @GetMapping("/cours/editcours/{coursId}")
     public String editCours(@PathVariable Long coursId, Model model){
 
         Cours newcours = coursService.findById(coursId);
@@ -89,7 +89,7 @@ public class SpringFileUploadController {
 
 
 
-    @GetMapping("/deletecours/{coursId}")
+    @GetMapping("/cours/deletecours/{coursId}")
     public String deletecours(@PathVariable Long coursId, RedirectAttributes redirectAttributes){
         coursService.deleteFilesByCoursId(coursId);
         coursService.deleteCours(coursId);
@@ -99,7 +99,7 @@ public class SpringFileUploadController {
     }
 
 
-    @GetMapping("/coursDetails/{coursId}")
+    @GetMapping("/cours/coursDetails/{coursId}")
     public String CoursDetails(@PathVariable Long coursId, Model model){
 
         Cours cours = coursService.findById(coursId);

@@ -58,17 +58,12 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public User updateUser(Long id, User user) {
-		User Olduser= findById(id);
-		Olduser.setCreatedDate(new Date());
-		Olduser.setNom(user.getNom());
-		Olduser.setPrenom(user.getPrenom());
-		Olduser.setGenre(user.getGenre());
-		Olduser.setEmail(user.getEmail());
-		Olduser.setPassword(encoder.encode(user.getPassword()));
-		Olduser.setRole(user.getRole());
-		userRepository.save(Olduser);
-		return Olduser;
+	public User updateUser(User user) {
+		user.setCreatedDate(new Date());
+
+		user.setPassword(encoder.encode(user.getPassword()));
+		User UpUser =userRepository.save(user);
+		return  UpUser;
 	}
 
 	@Override
@@ -100,5 +95,23 @@ public class UserServiceImp implements UserService {
 	@Override
 	public String getUsersFiltred() {
 		return null;
+	}
+
+	@Override
+	public User getUserConnect(HttpServletRequest httpServletRequest) {
+
+		List<User> users = userRepository.findAll();
+
+		HttpSession httpSession = httpServletRequest.getSession();
+		SecurityContext securityContext = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
+		String email = securityContext.getAuthentication().getName();
+		User u = new User();
+		for (User user : users) {
+			if (user.getEmail().equals(email)) {
+				u = user;
+			}
+		}
+		return u;
+
 	}
 }

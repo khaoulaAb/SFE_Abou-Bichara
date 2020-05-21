@@ -1,0 +1,113 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head data-th-replace="fragements/head :: head">
+
+
+    <style>
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+
+        <!--- -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-9 offset-md-1 ">
+                    <!-- form card register -->
+                    <div class="card bg-light text-dark ">
+                        <div class="card-header border border-left-0 border-right-0 border-top-0 border-warning">
+                            <h3 class="text-center ">Modifier</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <form th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data" class="form" role="form" autocomplete="off">
+
+                                <div class="form-group">
+                                    <label for="nom" class="form-control-label">Nom:</label>
+                                    <input type="text" class="form-control" id="nom" th:field="*{nom}" value="" required="" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="prenom" class="form-control-label">Prenom:</label>
+                                    <input type="text" class="form-control" id="prenom" th:field="*{prenom}" value="" required=""/>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input type="radio" id="F" th:field="*{genre}"  value="F"
+                                           checked>
+                                    <label for="F">F</label>
+
+
+
+                                    <input type="radio" id="M" th:field="*{genre}" value="M">
+                                    <label for="M">M</label>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="form-control-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" th:field="*{email}" value=""  required=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="form-control-label">Password:</label>
+                                    <input type="password" class="form-control" id="password" th:field="*{password}" value=""  />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="role" class="form-control-label">Role:</label><br>
+                                    <select th:field="*{role}" id="role"  required="">
+                                        <option th:each="role: ${roles}"
+                                                th:value="${role.id}"
+                                                th:text="${role.role}"/>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <a class="btn btn-secondary float-left" th:href="@{/users}"> annuler</a>
+                                    <button type="submit" class="btn btn-primary btn-lg float-right" >Enregistrer</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <!-- /form card register -->
+                </div>
+            </div>
+            <!--/row-->
+            <!--/col-->
+            <!--/row-->
+            <hr>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+
+
+
+</body>
+</html>

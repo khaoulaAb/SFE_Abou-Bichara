@@ -13,8 +13,10 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/").setViewName("index");
-       // registry.addViewController("/registers").setViewName("register");
+     //   registry.addViewController("/").setViewName("index");
+        registry.addViewController("/erreur").setViewName("erreur");
+
+        // registry.addViewController("/registers").setViewName("register");
 
 
 

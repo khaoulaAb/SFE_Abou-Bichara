@@ -39,6 +39,23 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/css/**","/js/**","/images/**","/webjars/**").permitAll()
+                    /***Users***
+                    .antMatchers("/users").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/findUser/{id}").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/users/{id}/delete").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/create").access("hasRole('ROLE_ADMIN')")
+*/
+                .antMatchers("/users").hasAuthority("ROLE_ADMIN")
+
+                /***Cours***
+                    .antMatchers("/cours/save").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
+                    .antMatchers("/editcours/{coursId}").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/deletecours/{coursId}").access("hasRole('ROLE_ADMIN')")
+*/
+
+
+
+
 
                 .anyRequest()
                     .authenticated()
@@ -47,8 +64,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
 
                     .permitAll()
-                    .defaultSuccessUrl("/")
-                    .and()
+                     .defaultSuccessUrl("/")
+
+                .and()
                 .logout().    //logout configuration
                      logoutUrl("/Logout").
                         logoutSuccessUrl("/login");

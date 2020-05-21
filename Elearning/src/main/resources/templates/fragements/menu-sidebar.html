@@ -1,22 +1,34 @@
 <nav id="sidebar"  data-th-fragment="menu-sidebar">
     <div class="p-4 pt-5" style="position: fixed; width: 300px;" >
 
-        <p href="#" class="img logo rounded-circle mb-5" >[[${#httpServletRequest.remoteUser}]]</p>
+        <!-- <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getRole().getRole()}" ></p>
+         <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getNom()}+' '+${usersConn.getPrenom()}" ></p>-->
+
         <ul class="list-unstyled components mb-5">
             <li>
                 <a th:href="@{/}">Accueil</a>
             </li>
 
-            <li >
-                <a th:href="@{/users}">Utilisateur</a>
-            </li>
 
+            <li >
+                <a th:href="@{/users}" <!--th:if="${usersConn.getRole().getRole()=='ADMIN'}"-->>Utilisateur</a>
+            </li>
 
             <li>
                 <a th:href="@{/cours}">Cours</a>
             </li>
+
             <li>
-                <a href="#">Filières</a>
+                <a th:href="@{/vosCours}">Votre Cours</a>
+            </li>
+            <li>
+                <a >Cours par Filières</a>
+            </li>
+            <li>
+                <a th:href="@{/filieres}">Filières</a>
+            </li>
+            <li>
+                <a th:href="@{/tchat}">Communication</a>
             </li>
 
         </ul>

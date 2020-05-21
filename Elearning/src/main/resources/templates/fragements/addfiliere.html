@@ -1,0 +1,28 @@
+<form  th:action="@{/filieres/save}" method="post"   enctype="multipart/form-data" data-th-fragment="addfiliere">
+    <div class="modal fade" id="exampleModalFiliere" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="text-center ">Ajouter une Filière</h3>
+                </div>
+                 <div class="modal-body">
+                     <div class="form-group">
+                         <input type="hidden" class="form-control" id="id" name="id" value=""/>
+                     </div>
+                     <div class="form-group">
+                         <label for="abr">Abriviation</label>
+                         <input type="text" class="form-control" id="abr" placeholder="Abriviation" name="abr"  required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" required="">
+                    </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-primary" value="Ajouter" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

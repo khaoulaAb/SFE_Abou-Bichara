@@ -16,7 +16,7 @@ $('.confirm-delete').on('click', function(e){
     e.preventDefault();
     var id= $(this).data('id');
 
-    $("#idModalLink").attr('href','/deletecours/'+id);
+    $("#idModalLink").attr('href','/cours/deletecours/'+id);
     $("#myModalCours").modal();
 
 

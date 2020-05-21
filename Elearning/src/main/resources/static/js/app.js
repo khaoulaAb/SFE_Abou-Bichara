@@ -61,5 +61,22 @@ $(document).ready(function(){
     });
 
 
+    /**********  Filiere *************/
+
+    $('.Fbtn').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('.myForm #id').val('');
+        $('.myForm #abr').val('');
+        $('.myForm #nom').val('');
+        $('.myForm #exampleModalFiliere').modal();
+    });
+
+    $('.table .btnDelF').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('#myModalF #delFf').attr('href',href);
+        $('#myModalF').modal();
+    });
 
 });
