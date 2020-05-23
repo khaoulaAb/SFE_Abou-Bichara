@@ -59,7 +59,14 @@ $(document).ready(function(){
         $('.myForm #filiere').val('');
         $('.myForm #exampleModalCours').modal();
     });
+/***** Remarque***/
 
+    $('.btnDel').on('click', function(event){
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('#myModalRem #delr').attr('href',href);
+        $('#myModalRem').modal();
+    });
 
     /**********  Filiere *************/
 
@@ -79,4 +86,14 @@ $(document).ready(function(){
         $('#myModalF').modal();
     });
 
+
+
 });
+
+function hideThis(_div){
+    var obj = document.getElementById(_div);
+    if(obj.style.display == "block")
+        obj.style.display = "none";
+    else
+        obj.style.display = "block";
+}

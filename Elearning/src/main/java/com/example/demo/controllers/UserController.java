@@ -34,6 +34,7 @@ private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
 
+    @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
     @GetMapping("/users")
     public String dashboard(Model model,HttpServletRequest httpServletRequest) {
         //display all Tasks

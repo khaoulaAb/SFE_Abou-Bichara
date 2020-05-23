@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Cours implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "nom est obligatoire")
+    @NotNull(message = "titre est obligatoire")
     private String titre;
 
     @Size(max=2000)
@@ -29,6 +30,8 @@ public class Cours implements Serializable {
     @Transient
     private List<String> removeImages= new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "cours",cascade = CascadeType.ALL)
+    private Collection<Remarque> remarques;
 
     private Date createdDate;
 
@@ -117,4 +120,11 @@ public class Cours implements Serializable {
     }
 
 
+    public Collection<Remarque> getRemarques() {
+        return remarques;
+    }
+
+    public void setRemarques(Collection<Remarque> remarques) {
+        this.remarques = remarques;
+    }
 }

@@ -48,6 +48,12 @@ public class User implements Serializable {
     private Collection<Cours> cours;
 
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade = CascadeType.ALL)
+    private Collection<Remarque> remarques;
+
+
+
+
     public User() {
     }
 
@@ -139,6 +145,15 @@ public class User implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+
+    public Collection<Remarque> getRemarques() {
+        return remarques;
+    }
+
+    public void setRemarques(Collection<Remarque> remarques) {
+        this.remarques = remarques;
     }
 
 

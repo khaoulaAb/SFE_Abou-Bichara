@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -42,10 +42,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                     /***Users***
                     .antMatchers("/users").access("hasRole('ROLE_ADMIN')")
                     .antMatchers("/findUser/{id}").access("hasRole('ROLE_ADMIN')")
-                    .antMatchers("/users/{id}/delete").access("hasRole('ROLE_ADMIN')")
-                    .antMatchers("/create").access("hasRole('ROLE_ADMIN')")
-*/
-                .antMatchers("/users").hasAuthority("ROLE_ADMIN")
+                    .antMatchers("/users/{id}/delete").access("hasRole('ROLE_ADMIN')")*/
+
+            //   .antMatchers("/users").hasAuthority("ROLE_ADMIN")
 
                 /***Cours***
                     .antMatchers("/cours/save").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")

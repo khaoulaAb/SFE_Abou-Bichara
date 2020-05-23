@@ -19,4 +19,6 @@ public interface CoursService {
     void deleteFilesByCoursId(Long coursId);
 
     void deleteCours(Long coursId);
+
+    void deleteRemarquesByCours(Long coursId);
 }

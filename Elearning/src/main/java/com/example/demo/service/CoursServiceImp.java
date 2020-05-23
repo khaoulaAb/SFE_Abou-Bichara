@@ -5,6 +5,7 @@ import com.example.demo.entities.CoursFiles;
 import com.example.demo.entities.User;
 import com.example.demo.repository.CoursFilesRepository;
 import com.example.demo.repository.CoursRepository;
+import com.example.demo.repository.RemarqueRepository;
 import com.example.demo.repository.UserRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
 public class CoursServiceImp implements CoursService {
+
     @Autowired
     private CoursRepository coursRepository;
     @Autowired
@@ -41,6 +40,17 @@ public class CoursServiceImp implements CoursService {
     @Autowired
     private ServletContext context;
 
+    @Autowired
+    private RemarqueRepository remarqueRepository;
+
+    @Override
+    public List<Cours> getCoursbyUser(HttpServletRequest httpServletRequest) {
+        User user=userService.getUserConnect(httpServletRequest);
+        List<Cours> cours = coursRepository.getCoursByUser(user.getId());
+
+        return cours;
+
+    }
     @Override
     public List<Cours> getAllCours() {
 
@@ -89,11 +99,7 @@ public class CoursServiceImp implements CoursService {
     }
 
 
-    @Override
-    public List<Cours> getCoursbyUser(HttpServletRequest httpServletRequest) {
-        return null;
 
-    }
 
     @Override
     public Cours findById(Long id) {
@@ -182,5 +188,10 @@ public class CoursServiceImp implements CoursService {
     @Override
     public void deleteCours(Long coursId) {
         coursRepository.deleteById(coursId);
+    }
+
+    @Override
+    public void deleteRemarquesByCours(Long coursId) {
+        remarqueRepository.deleteByCoursId(coursId);
     }
 }

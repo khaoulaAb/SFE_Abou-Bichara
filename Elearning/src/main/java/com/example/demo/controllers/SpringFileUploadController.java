@@ -1,13 +1,11 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Cours;
-import com.example.demo.entities.CoursFiles;
-import com.example.demo.entities.Filiere;
-import com.example.demo.repository.CoursRepository;
-import com.example.demo.repository.FiliereRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.entities.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.CoursService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +25,14 @@ public class SpringFileUploadController {
    @Autowired
    private FiliereRepository filiereRepository;
 
+   @Autowired
+   private UserService userService;
+   @Autowired
+   private RemarqueRepository remarqueRepository;
+
+
+
+
    @GetMapping("/cours")
    public String cours(Model model){
        List<Cours> Listcours = coursService.getAllCours();
@@ -40,6 +46,11 @@ public class SpringFileUploadController {
 
         return "cours";
     }
+
+
+
+
+
 
 
     @PostMapping("/cours/save")
@@ -93,6 +104,7 @@ public class SpringFileUploadController {
     public String deletecours(@PathVariable Long coursId, RedirectAttributes redirectAttributes){
         coursService.deleteFilesByCoursId(coursId);
         coursService.deleteCours(coursId);
+        coursService.deleteRemarquesByCours(coursId);
         redirectAttributes.addFlashAttribute("successmessage","cours est supprimé");
 
         return "redirect:/cours";
@@ -109,8 +121,136 @@ public class SpringFileUploadController {
         model.addAttribute("coursfiles",coursFiles);
         List<Filiere> filieres= filiereRepository.findAll();
         model.addAttribute("filieres",filieres);
+        Collection<Remarque> Listremarque= cours.getRemarques();
+        model.addAttribute("nbr",Listremarque.size());
+
+        model.addAttribute("Listremarque",Listremarque);
+
         return "coursDetails";
     }
+
+
+    @PostMapping("/cours/coursDetails/{coursId}/save")
+    public String saveRemarque(@PathVariable Long coursId,@ModelAttribute Remarque remarque,RedirectAttributes redirectAttributes,HttpServletRequest httpServletRequest){
+        Cours cours = coursService.findById(coursId);
+        User u = userService.getUserConnect(httpServletRequest);
+
+        remarque.setCours(cours);
+        remarque.setUser(u);
+        remarque.setCreatedDate(new Date());
+        redirectAttributes.addFlashAttribute("successmessage","remarque est ajouter");
+
+        remarqueRepository.save(remarque);
+
+        return "redirect:/cours/coursDetails/{coursId}";
+    }
+
+    @GetMapping("/cours/coursDetails/{coursId}/delete/{RemId}")
+    public String deleteRem(@PathVariable Long RemId, RedirectAttributes redirectAttributes){
+        remarqueRepository.deleteById(RemId);
+        redirectAttributes.addFlashAttribute("successmessage","Filière est supprimé");
+
+        return "redirect:/cours/coursDetails/{coursId}";
+    }
+
+
+
+
+    @GetMapping(value="/cours/search")
+    public String coursSearch(Model model, String s,HttpServletRequest httpServletRequest) {
+        model.addAttribute("Listcours", this.courssSearch(s,httpServletRequest));
+
+        model.addAttribute("cours", new Cours());
+        model.addAttribute("coursfiles",new ArrayList<CoursFiles>());
+        // model.addAttribute("isAdd",true);
+
+        List<Filiere> filieres= filiereRepository.findAll();
+        model.addAttribute("filieres",filieres);
+        return "/cours";
+    }
+
+
+    public List<Cours> courssSearch(String s,HttpServletRequest httpServletRequest) {
+        List<Cours> all=  coursService.getAllCours();
+        ArrayList<Cours> l = new ArrayList<Cours>();
+        for(int i=0;i<all.size();i++) {
+            if((all.get(i).getTitre().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getTitre(),s))
+                    ||(all.get(i).getUser().getNom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getUser().getNom(),s))
+                    ||(all.get(i).getFiliere().getAbr().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getFiliere().getAbr(),s))
+                    ||(all.get(i).getUser().getPrenom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getUser().getPrenom(),s))
+                    ||(all.get(i).getFiliere().getNom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getFiliere().getNom(),s))
+
+            ) {
+                l.add(all.get(i));
+            }
+        }
+        return l;
+
+
+    }
+
+    public  boolean containsIgnoreCase(String str, String searchStr)     {
+        if(str == null || searchStr == null) return false;
+
+        final int length = searchStr.length();
+        if (length == 0)
+            return true;
+
+        for (int i = str.length() - length; i >= 0; i--) {
+            if (str.regionMatches(true, i, searchStr, 0, length))
+                return true;
+        }
+        return false;
+    }
+
+/**************votre cours*************/
+    @GetMapping("/votreCours")
+    public String Voscours(Model model,HttpServletRequest httpServletRequest){
+        List<Cours> Listcours = coursService.getCoursbyUser(httpServletRequest);
+        model.addAttribute("cours", new Cours());
+        model.addAttribute("coursfiles",new ArrayList<CoursFiles>());
+        // model.addAttribute("isAdd",true);
+
+        List<Filiere> filieres= filiereRepository.findAll();
+        model.addAttribute("filieres",filieres);
+        model.addAttribute("Listcours",Listcours);
+
+        return "vosCours";
+    }
+
+    @GetMapping(value="/votreCours/search")
+    public String VoscoursSearch(Model model, String s,HttpServletRequest httpServletRequest) {
+        model.addAttribute("Listcours", this.voscourssSearch(s,httpServletRequest));
+
+        model.addAttribute("cours", new Cours());
+        model.addAttribute("coursfiles",new ArrayList<CoursFiles>());
+        // model.addAttribute("isAdd",true);
+
+        List<Filiere> filieres= filiereRepository.findAll();
+        model.addAttribute("filieres",filieres);
+        return "/votreCours";
+    }
+
+
+    public List<Cours> voscourssSearch(String s,HttpServletRequest httpServletRequest) {
+        List<Cours> all=  coursService.getCoursbyUser(httpServletRequest);
+        ArrayList<Cours> l = new ArrayList<Cours>();
+        for(int i=0;i<all.size();i++) {
+            if((all.get(i).getTitre().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getTitre(),s))
+                    ||(all.get(i).getUser().getNom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getUser().getNom(),s))
+                    ||(all.get(i).getFiliere().getAbr().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getFiliere().getAbr(),s))
+                    ||(all.get(i).getUser().getPrenom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getUser().getPrenom(),s))
+                    ||(all.get(i).getFiliere().getNom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getFiliere().getNom(),s))
+
+            ) {
+                l.add(all.get(i));
+            }
+        }
+        return l;
+
+
+    }
+
 
 
 }

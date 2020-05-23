@@ -1,0 +1,45 @@
+<!--<form  th:action="@{/cours/coursDetails/{id}/save (id=${cours.id})}" method="post" data-th-fragment="remarque">
+    <div class="modal fade" id="exampleModalRemarque" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="text-center ">Remarque</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" id="id" name="id" value=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="remarque" >Remarque <em style="font-size: 12px;">(maximum 1000 caractères)</em></label>
+                        <input type="text" class="form-control" id="remarque" name="msg" value="" required=""/>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-primary" value="Ajouter" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+-->
+
+<form  th:action="@{/cours/coursDetails/{id}/save (id=${cours.id})}" method="post" data-th-fragment="remarque">
+
+
+    <div class="form-group">
+        <em style="font-size: 12px;">(maximum 2000 caractères)</em>
+        <textarea class="form-control" rows="4" maxlength="1000" id="remarque" title="maximum 1000 caractères" value="" placeholder="Commentaire" name="msg" required=""></textarea>
+
+    </div>
+    <div class="form-group">
+
+        <button type="submit" class="btn btn-info  btn-sm float-right" >envoyer</button>
+
+    </div>
+</form>

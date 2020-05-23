@@ -11,7 +11,7 @@
 
 
             <li >
-                <a th:href="@{/users}" <!--th:if="${usersConn.getRole().getRole()=='ADMIN'}"-->>Utilisateur</a>
+                <a th:href="@{/users}"> <!--th:if="${usersConn.getRole().getRole()=='ADMIN'}"-->Utilisateur</a>
             </li>
 
             <li>
@@ -19,16 +19,14 @@
             </li>
 
             <li>
-                <a th:href="@{/vosCours}">Votre Cours</a>
+                <a th:href="@{/votreCours}">Votre Cours</a>
             </li>
-            <li>
-                <a >Cours par Filières</a>
-            </li>
+
             <li>
                 <a th:href="@{/filieres}">Filières</a>
             </li>
             <li>
-                <a th:href="@{/tchat}">Communication</a>
+                <a th:href="@{/tchat}">Forum</a>
             </li>
 
         </ul>
