@@ -4,13 +4,21 @@
         <!-- <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getRole().getRole()}" ></p>
          <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getNom()}+' '+${usersConn.getPrenom()}" ></p>-->
 
+
         <ul class="list-unstyled components mb-5">
+            <img style="width:170%;margin-left: -38%; margin-top:-20%; " th:src="${'images/Logoo.png'}" alt="image" >
+<br>
+            <p class="profile-name" style=" text-align: center " sec:authentication="name"></p>
+
+            <small style="text-align: center " sec:authentication="principal.authorities" class="designation text-muted"></small>
+            <span class="status-indicator online"></span>
+            <br><br>
             <li>
                 <a th:href="@{/}">Accueil</a>
             </li>
 
 
-            <li >
+            <li  sec:authorize="hasRole('ROLE_ADMIN')" >
                 <a th:href="@{/users}"> <!--th:if="${usersConn.getRole().getRole()=='ADMIN'}"-->Utilisateur</a>
             </li>
 
@@ -18,11 +26,11 @@
                 <a th:href="@{/cours}">Cours</a>
             </li>
 
-            <li>
+            <li sec:authorize="hasRole('ROLE_ADMIN') or  hasRole('ROLE_PROF')">
                 <a th:href="@{/votreCours}">Votre Cours</a>
             </li>
 
-            <li>
+            <li  sec:authorize="hasRole('ROLE_ADMIN')" >
                 <a th:href="@{/filieres}">Filières</a>
             </li>
             <li>
@@ -30,10 +38,10 @@
             </li>
 
         </ul>
-
+<br> <br>
         <div class="footer">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> EST-ESSAOUIRA  <i class="fa fa-book"></i> E-learning<i class="fa fa-laptop"></i>
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
         </div>
 

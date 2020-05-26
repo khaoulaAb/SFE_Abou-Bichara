@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
+
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -36,6 +37,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+                .exceptionHandling().accessDeniedPage("/erreur")
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/css/**","/js/**","/images/**","/webjars/**").permitAll()
@@ -46,13 +50,27 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
             //   .antMatchers("/users").hasAuthority("ROLE_ADMIN")
 
-                /***Cours***
+                /***Cours***/
                     .antMatchers("/cours/save").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
-                    .antMatchers("/editcours/{coursId}").access("hasRole('ROLE_ADMIN')")
-                    .antMatchers("/deletecours/{coursId}").access("hasRole('ROLE_ADMIN')")
-*/
+                    .antMatchers("/cours/editcours/{id}").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
+                    .antMatchers("/cours/deletecours/{id}").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
+                    .antMatchers("/cours/update").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
+                .antMatchers("/votreCours").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF')")
 
+                /**Filieres***/
+                    .antMatchers("/filieres").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/filieres/search").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/filieres/editfiliere/{id}").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/filieres/save").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/filieres/update/{id}").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/filieres/deletefiliere/{id}").access("hasRole('ROLE_ADMIN')")
 
+                /** Users***/
+                .antMatchers("/users").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/findUser/{id}").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/update/{id}").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/{id}/delete").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/search").access("hasRole('ROLE_ADMIN')")
 
 
 

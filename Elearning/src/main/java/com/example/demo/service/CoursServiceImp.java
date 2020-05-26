@@ -9,6 +9,7 @@ import com.example.demo.repository.RemarqueRepository;
 import com.example.demo.repository.UserRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -100,7 +101,6 @@ public class CoursServiceImp implements CoursService {
 
 
 
-
     @Override
     public Cours findById(Long id) {
         Optional<Cours> cours = coursRepository.findById(id);
@@ -108,6 +108,7 @@ public class CoursServiceImp implements CoursService {
             return cours.get();
         }
         return null;
+
     }
 
     @Override
@@ -187,6 +188,7 @@ public class CoursServiceImp implements CoursService {
 
     @Override
     public void deleteCours(Long coursId) {
+
         coursRepository.deleteById(coursId);
     }
 

@@ -80,7 +80,7 @@ public class FiliereController {
         Filiere newFiliere = filiereRepository.save(filiere);
 
         if(newFiliere!=null){
-            redirectAttributes.addFlashAttribute("successMessage","Filiere est enregistré");
+            redirectAttributes.addFlashAttribute("successmessage","Filiere a été ajouté");
             return "redirect:/filieres";
         }
         else{
@@ -113,7 +113,7 @@ public class FiliereController {
 
         filiereRepository.save(filiere);
         model.addAttribute("filieres", filiereRepository.findAll());
-        redirectAttributes.addFlashAttribute("successmessage","Filière est modifié");
+        redirectAttributes.addFlashAttribute("successmessage","Filière a été modifié");
 
         return "filieres";
     }
@@ -121,8 +121,9 @@ public class FiliereController {
 
 
     @GetMapping("/filieres/deletefiliere/{id}")
-    public String deletecours(@PathVariable Long id){
+    public String deletecours(@PathVariable Long id,RedirectAttributes redirectAttributes){
         filiereRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("successmessage","Filière a été supprimé");
 
 
         return "redirect:/filieres";

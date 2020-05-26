@@ -17,19 +17,21 @@
         <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
 
         <div class = "container">
-            <button class="btn btn-success btnAddCours "><i class="fa fa-plus"></i></button>
             <h2 class="text-center mb-5">Liste des Cours</h2>
             <nav class="navbar navbar-expand-lg navbar navbar-light bg-light">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a type="button" th:href="@{/cours}" class="nav-link btn btn-warning ">Cours</a>
-                        </li>
+
 
                     </ul>
                     <form class="forms-sample" th:action="@{/cours/search}">
 
                         <div class="input-group">
+                            <div class="input-group-prepend bg-info">
+                                <span class="input-group-text bg-transparent">
+                                   <a th:href="@{/cours}"><i class="fa fa-refresh"></i></a>
+                                </span>
+                            </div>
                             <input class="form-control mr-sm-2" type="text"  placeholder="Rechercher" aria-label="Username" aria-describedby="colored-addon1"
                                    name="s" id="search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
@@ -76,8 +78,8 @@
 
                 <!--/container-->
 
-            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
-                <strong th:text="${successMessage}"></strong>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successmessage}">
+                <strong th:text="${successmessage}"></strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -113,11 +115,11 @@
                                     </span>
                                 &nbsp
 
-                                    <a class="btn btn-success"  th:href="@{/cours/coursDetails/{id}(id=${cours.id})}"><i class="fa fa-info"></i></a>
+                                    <a  class="btn btn-success"  th:href="@{/cours/coursDetails/{id}(id=${cours.id})}"><i class="fa fa-info"></i></a>
 
-                                    <a class="btn btn-primary" th:href="@{/cours/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
+                                    <a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF') " class="btn btn-primary" th:href="@{/cours/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
 
-                                     <a href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
+                                     <a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_PROF') " href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
 
                             </div>
 

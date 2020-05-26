@@ -62,8 +62,10 @@ private UserRepository userRepository;
     }
 
     @RequestMapping(path = "/users/create", method = RequestMethod.POST)
-    public String createUser(User user){
+    public String createUser(User user,RedirectAttributes redirectAttributes){
         User newUser= userService.createUser(user);
+        redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été ajouté");
+
         return "redirect:/users";
     }
 
@@ -88,13 +90,15 @@ private UserRepository userRepository;
             user.setId(id);
             return "UserUpdate";
         }
-        user.setPassword(user.getPassword());
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setCreatedDate(new Date());
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("roles",roleRepository.findAll());
 
-        redirectAttributes.addFlashAttribute("successmessage","User est modifié");
+        redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été modifié");
 
         return "users";
     }
@@ -103,8 +107,10 @@ private UserRepository userRepository;
 
 
     @RequestMapping(path = "/users/{id}/delete", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") long id, HttpServletRequest request){
+    public String deleteUser(@PathVariable("id") long id, HttpServletRequest request,RedirectAttributes redirectAttributes){
         userService.deleteUser(id);
+        redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été supprimé");
+
         return "redirect:/users";
     }
 

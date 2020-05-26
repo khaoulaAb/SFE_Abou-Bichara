@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head data-th-replace="fragements/head :: head">
+
+
+    <style>
+
+    </style>
 </head>
+
+
 <body>
-eeeeeeeeeeeeeeeee
+
+<div class="wrapper d-flex align-items-stretch">
+    <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+    <div id="content" class="p-4 p-md-5">
+        <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+
+        <!--- -->
+        <div class="container">
+
+          <div>erreuuuur</div>
+            <!--/row-->
+            <!--/col-->
+            <!--/row-->
+            <hr>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<div data-th-replace="fragements/script :: script"></div>
+
+
+
+
 </body>
 </html>

@@ -58,27 +58,31 @@ public class SpringFileUploadController {
        Cours newCours = coursService.saveCours(cours,httpServletRequest);
 
        if(newCours!=null){
-           redirectAttributes.addFlashAttribute("successMessage","cours est enregistré");
-           return "redirect:/cours";
+           redirectAttributes.addFlashAttribute("successmessage","cours a été ajouté");
+           return "redirect:/votreCours";
        }
        else{
            redirectAttributes.addFlashAttribute("errormessage","cours n'est pas enregistré");
             model.addAttribute("cours",cours);
-            return "cours";
+            return "vosCours";
        }
     }
-
     @GetMapping("/cours/editcours/{coursId}")
     public String editCours(@PathVariable Long coursId, Model model){
 
         Cours newcours = coursService.findById(coursId);
-        List<CoursFiles> coursFiles= coursService.findFilesbyCoursId(coursId);
+        if(newcours!=null){
+            List<CoursFiles> coursFiles= coursService.findFilesbyCoursId(coursId);
 
-        model.addAttribute("cours", newcours);
-        model.addAttribute("coursfiles",coursFiles);
-        List<Filiere> filieres= filiereRepository.findAll();
-        model.addAttribute("filieres",filieres);
-        return "updateCours";
+            model.addAttribute("cours", newcours);
+            model.addAttribute("coursfiles",coursFiles);
+            List<Filiere> filieres= filiereRepository.findAll();
+            model.addAttribute("filieres",filieres);
+            return "updateCours";
+        }
+        else
+            return "redirect:/erreur";
+
     }
 
 
@@ -88,13 +92,13 @@ public class SpringFileUploadController {
         Cours newCours = coursService.updateCours(cours,httpServletRequest);
 
         if(newCours!=null){
-            redirectAttributes.addFlashAttribute("successMessage","cours est modifié");
-            return "redirect:/cours";
+            redirectAttributes.addFlashAttribute("successmessage","cours a été modifié");
+            return "redirect:/votreCours";
         }
         else{
             redirectAttributes.addFlashAttribute("errormessage","cours n'est pas modifié");
             model.addAttribute("cours",cours);
-            return "cours";
+            return "vosCours";
         }
     }
 
@@ -102,12 +106,17 @@ public class SpringFileUploadController {
 
     @GetMapping("/cours/deletecours/{coursId}")
     public String deletecours(@PathVariable Long coursId, RedirectAttributes redirectAttributes){
-        coursService.deleteFilesByCoursId(coursId);
-        coursService.deleteCours(coursId);
-        coursService.deleteRemarquesByCours(coursId);
-        redirectAttributes.addFlashAttribute("successmessage","cours est supprimé");
+        Cours cours =coursService.findById(coursId);
+        if(cours!=null){
+            coursService.deleteFilesByCoursId(coursId);
+            coursService.deleteCours(coursId);
+            coursService.deleteRemarquesByCours(coursId);
+            redirectAttributes.addFlashAttribute("successmessage","cours a été supprimé");
 
-        return "redirect:/cours";
+        }
+        else
+            return "redirect:/erreur";
+            return "redirect:/votreCours";
     }
 
 
@@ -138,7 +147,7 @@ public class SpringFileUploadController {
         remarque.setCours(cours);
         remarque.setUser(u);
         remarque.setCreatedDate(new Date());
-        redirectAttributes.addFlashAttribute("successmessage","remarque est ajouter");
+        redirectAttributes.addFlashAttribute("successmessage","remarque a été ajouté");
 
         remarqueRepository.save(remarque);
 
@@ -148,7 +157,7 @@ public class SpringFileUploadController {
     @GetMapping("/cours/coursDetails/{coursId}/delete/{RemId}")
     public String deleteRem(@PathVariable Long RemId, RedirectAttributes redirectAttributes){
         remarqueRepository.deleteById(RemId);
-        redirectAttributes.addFlashAttribute("successmessage","Filière est supprimé");
+        redirectAttributes.addFlashAttribute("successmessage","commentaire a été supprimé");
 
         return "redirect:/cours/coursDetails/{coursId}";
     }
