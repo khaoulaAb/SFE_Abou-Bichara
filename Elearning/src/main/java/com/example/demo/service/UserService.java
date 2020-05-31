@@ -23,7 +23,6 @@ public interface UserService {
     Set<User> getUserByRole(Role role);
     Set<User> getUsers();
 
-    String getUsersFiltred();
 
     User getUserConnect(HttpServletRequest httpServletRequest);
 }

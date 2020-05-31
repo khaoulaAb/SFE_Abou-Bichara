@@ -41,37 +41,6 @@
                 </div>
             </nav>
             <br>
-            <!--section    <section class="blog-list px-3 py-5 p-md-5" style="box-sizing: border-box;">
-                      <div class="alert alert-success" role="alert" th:if="${successMessage}">
-                          <strong th:text="${successMessage}"></strong>
-                      </div>
-                      <div class="alert alert-danger" role="alert" th:if="${errormessage}">
-                          <strong th:text="${errormessage}"></strong>
-                      </div>
-                      <div class="container">
-                          <div class="item mb-5" th:each="cours: ${Listcours}" style="box-shadow: 2px 2px 2px 2px #888888;">
-                              <div class="media">
-
-                                  <div class="media-body" >
-                                      <h2 class="title mb-1" style="font-weight: bold; font-size: 2.5rem;" th:text="${cours.getTitre()}"></h2>
-
-                                      <div class="meta mb-1"><span class="date"  ><em style=" display: inline-block; color:#5b90bf;" th:text="'publié par :'+ ${cours.getUser().getNom()}+' '+${cours.getUser().getPrenom()}"></em></span><span class="time"> &nbsp  &nbsp</span>
-                                          <span class="comment"><em style=" display: inline-block; color:#5b90bf"  th:text="'Filière :'+ ${cours.getFiliere().getAbr()}" ></em></span>
-                                      </div>
-
-                                      <div class="intro text-justify" style="font-size: 1.2rem; line-height: 1.5;  font-family: sans-serif; " th:text="${cours.getDescription()}"></div><br>
-                                      <a class="btn btn-outline-primary" ><i class="fa fa-info"></i></a>
-
-                                      <a class="btn btn-primary  " th:href="@{/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
-
-                                      <a href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
-                                  </div>
-                              </div>
-                          </div>
-
-                      </div>
-                  </section>
-              -->
 
             <div class="myForm">
                 <div data-th-replace="fragements/addCours :: addCours"></div>
@@ -85,49 +54,77 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+<!- -->
 
-            <div class="row">
+            <div class="card">
 
-                <div class="col-sm-4" th:each="cours: ${Listcours}" style="margin-bottom: 5%; " >
+                <div class="card-block">
 
-                    <div class="card text-dark bg-light">
+                    <table id="tableUsers"  class="table table-hover" >
+                        <thead>
+                        <tr>
+                            <th style="width: 35%">Titre</th>
+                            <th style="width: 10%">Description</th>
+                            <th style="width: 8%">Filiere</th>
+                            <th style="width: 10%;">Commentaires</th>
+                            <th style="width: 18%">Date</th>
+                            <th ></th>
 
-                        <div class="card-header  text-left text-light"  style="background-color: #ccffb3"><h3 th:text="${cours.getTitre()}"></h3>
-                            <span class="date"  ><em style=" display: inline-block; color:olive;" th:text="'publié par :'+ ${cours.getUser().getNom()}+' '+${cours.getUser().getPrenom()}"></em></span><span class="time"> &nbsp  &nbsp</span>
-                            <span class="comment"><em style=" display: inline-block; color:olive"  th:text="'Filière :'+ ${cours.getFiliere().getAbr()}" ></em></span>
-                        </div>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="cours: ${Listcours}">
+                            <td th:text="${cours.getTitre()}"></td>
+                            <td style=" text-align: center">
+                                <a class="btn btn-primary btn-sm btnDesc" th:attr="data-id=${cours.getDescription()}"  ><i class="fa fa-eye"></i></a>
 
-                        <div class="card-body overflow-auto"  style="height: 250px">
-                            <p class="card-text text-left text-justify" style="font-size: 1.2rem; line-height: 1.5;  font-family: sans-serif; " th:text="${cours.getDescription()}"> </p>
-                        </div>
+                                <!---- description modal--->
+
+                                <div class="modal fade" id="myModalDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-center" id="exampleModalLabel">Description</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="alert" id="pp"  >
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                        <div class="card-footer  border-warning text-right" style="background-color: #ccffb3" >
+                            </td>
+                            <td th:text="${cours.getFiliere().getAbr()}"></td>
+                            <td style=" text-align: center" th:text="${cours.getRemarques().size()}"></td>
+
+                            <td th:text=" ${cours.getCreatedDate()}"></td>
 
 
-                                    <span class="date text-left" >
-                                        <em style=" display: inline-block; color:olive;" th:text=" ${cours.getCreatedDate()}" >
-                                        </em>
+                            <td>
+                                <a class="btn btn-success btn-sm"  th:href="@{/cours/coursDetails/{id}(id=${cours.id})}"><i class="fa fa-info"></i></a>
 
+                                <a class="btn btn-primary btn-sm" th:href="@{/cours/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
 
-                                    </span>
-                            &nbsp
-
-                            <a class="btn btn-success"  th:href="@{/cours/coursDetails/{id}(id=${cours.id})}"><i class="fa fa-info"></i></a>
-
-                            <a class="btn btn-primary" th:href="@{/cours/editcours/{id}(id=${cours.id})}"><i class="fa fa-edit"></i></a>
-
-                            <a href="#" class="btn btn-danger confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
-
-                        </div>
-
-                    </div>
+                                <a href="#" class="btn btn-danger btn-sm confirm-delete" th:attr="data-id=${cours.id}"><i class="fa fa-remove"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
 
                 </div>
-                <br><br>
-
-
             </div>
+
+            <!--- -->
+
 
 
         </div>
@@ -143,18 +140,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class=iv"modal-body">
                 <p class="alert alert-danger">
                     Voulez-vous vraiment supprimer ce cours?
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a href ="" id="idModalLink" class="btn btn-danger"  >Delete</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <a href ="" id="idModalLink" class="btn btn-danger"  >Supprimer</a>
             </div>
         </div>
     </div>
 </div>
+
+
+
+</div>
+
+
+
+
+
+
+
 
 <div data-th-replace="fragements/script :: script"></div>
 

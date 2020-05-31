@@ -12,10 +12,174 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
         <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+        <div class = "container">
+            <h1 class="text-center mb-5">E-Learning</h1>
+                <br>
 
-        <h2 class="mb-4">Sidebar #01</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="row" style="margin-bottom: 4%">
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-primary"  >
+                            <div class="card-header">Header</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-secondary"  >
+                            <div class="card-header">Header</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-success"  >
+                            <div class="card-header">Header</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        <br>
+
+            <div class="row" style="margin-bottom: 4%">
+                <div class="col-sm-12">
+                    <div class="card "  >
+                        <div class="card-body">
+                            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                    <script th:inline="javascript">
+                        $(function(){
+                            Highcharts.chart('container', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Masculins et Féminins (Etudiants)'
+                                },
+
+                                xAxis: {
+                                    categories: [[${barChartData.keySet()}]],
+                                    crosshair: true
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        text: 'Nombre d Etudiants'
+                                    }
+                                },
+                                tooltip: {
+                                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                    footerFormat: '</table>',
+                                    shared: true,
+                                    useHTML: true
+                                },
+                                plotOptions: {
+                                    column: {
+                                        pointPadding: 0.2,
+                                        borderWidth: 0
+                                    }
+                                },
+                                series: [{
+                                    name: 'Etudiants',
+                                    data: [[${barChartData.values()}]]
+
+                                }]
+                            });
+                        });
+                    </script>
+
+                </div>
+
+                <div >
+                    <figure class="highcharts-figure">
+                        <div id="EtuFM"></div>
+                        <p class="highcharts-description">
+                            Pie charts are very popular for showing a compact overview of a
+                            composition or comparison. While they can be harder to read than
+                            column charts, they remain a popular choice for small datasets.
+                        </p>
+                    </figure>
+                    <script th:inline="javascript">
+                        Highcharts.chart('EtuFM', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Browser market shares in January, 2018'
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            accessibility: {
+                                point: {
+                                    valueSuffix: '%'
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                    }
+                                }
+                            },
+                            series: [{
+                                name: 'Brands',
+                                colorByPoint: true,
+                                data: [{
+                                    name: 'Chrome',
+                                    y: 61.41,
+                                    sliced: true,
+                                    selected: true
+                                }, {
+                                    name: 'Internet Explorer',
+                                    y: 11.84
+                                }, {
+                                    name: 'Firefox',
+                                    y: 10.85
+                                }, {
+                                    name: 'Edge',
+                                    y: 4.67
+                                }, {
+                                    name: 'Safari',
+                                    y: 4.18
+                                }, {
+                                    name: 'Sogou Explorer',
+                                    y: 1.64
+                                }, {
+                                    name: 'Opera',
+                                    y: 1.6
+                                }, {
+                                    name: 'QQ',
+                                    y: 1.2
+                                }, {
+                                    name: 'Other',
+                                    y: 2.61
+                                }]
+                            }]
+                        });
+                    </script>
+                </div>
+
+
+        </div>
+
+    </div>
     </div>
 </div>
 <div data-th-replace="fragements/script :: script"></div>

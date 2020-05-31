@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entities.Cours;
 import com.example.demo.entities.CoursFiles;
+import com.example.demo.entities.Remarque;
 import org.springframework.security.access.prepost.PostAuthorize;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,4 +25,11 @@ public interface CoursService {
     void deleteCours(Long coursId);
 
     void deleteRemarquesByCours(Long coursId);
+
+    @PostAuthorize("(returnObject.user.email == authentication.name)  or (returnObject.cours.user.email == authentication.name)" )
+    Remarque findByIdrem(Long id);
+
+    List<Cours> getCoursByFiliere(Long idF);
+    List<Cours> getCoursByUser(Long idC);
+
 }

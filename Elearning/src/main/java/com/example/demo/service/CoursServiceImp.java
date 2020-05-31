@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entities.Cours;
 import com.example.demo.entities.CoursFiles;
+import com.example.demo.entities.Remarque;
 import com.example.demo.entities.User;
 import com.example.demo.repository.CoursFilesRepository;
 import com.example.demo.repository.CoursRepository;
@@ -195,5 +196,28 @@ public class CoursServiceImp implements CoursService {
     @Override
     public void deleteRemarquesByCours(Long coursId) {
         remarqueRepository.deleteByCoursId(coursId);
+    }
+
+
+    @Override
+    public Remarque findByIdrem(Long id) {
+
+        Optional<Remarque> remarque = remarqueRepository.findById(id);
+        if(remarque.isPresent()){
+            return remarque.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Cours> getCoursByFiliere(Long idF) {
+        List<Cours> cours = coursRepository.getCoursByFilere(idF);
+        return cours;
+    }
+
+    @Override
+    public List<Cours> getCoursByUser(Long idC) {
+        List<Cours> cours = coursRepository.getCoursByUser(idC);
+        return cours;
     }
 }

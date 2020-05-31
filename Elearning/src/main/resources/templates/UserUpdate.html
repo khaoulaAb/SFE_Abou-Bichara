@@ -69,7 +69,7 @@
 
                                 <div class="form-group">
                                     <label for="role" class="form-control-label">Role:</label><br>
-                                    <select th:field="*{role}" id="role"  required="">
+                                    <select class="form-group" th:field="*{role}" id="role"  required="">
                                         <option th:each="role: ${roles}"
                                                 th:value="${role.id}"
                                                 th:text="${role.role}"/>

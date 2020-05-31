@@ -1,4 +1,6 @@
 
+
+
 $(document).ready(function(){
 
     /************Users **********/
@@ -28,7 +30,7 @@ $(document).ready(function(){
             $('.myForm #genre').val('');
             $('.myForm #email').val('');
             $('.myForm #role').val('');
-            $('.myForm #exampleModal').modal();
+            $('.myForm #exampleModalUser').modal();
         });
 
 
@@ -87,13 +89,21 @@ $(document).ready(function(){
     });
 
 
+    /******** Description *****/
+    $('.btnDesc').on('click', function(event){
+        event.preventDefault();
+        var id= $(this).data('id');
+    console.log(id);
+        document.getElementById('pp').innerHTML=id;
+
+        $('#myModalDesc').modal();
+    });
+
+
+
+
 
 });
 
-function hideThis(_div){
-    var obj = document.getElementById(_div);
-    if(obj.style.display == "block")
-        obj.style.display = "none";
-    else
-        obj.style.display = "block";
-}
+
+

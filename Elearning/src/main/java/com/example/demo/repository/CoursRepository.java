@@ -14,4 +14,7 @@ public interface CoursRepository extends CrudRepository<Cours,Long> {
 
     @Query("select c from Cours as c where c.user.id=?1")
     List<Cours> getCoursByUser(Long id);
+
+    @Query("select c from Cours as c where c.filiere.id=?1 order by c.createdDate desc ")
+    List<Cours> getCoursByFilere(Long idF);
 }

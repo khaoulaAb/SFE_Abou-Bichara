@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class UserServiceImp implements UserService {
 	@Autowired
 	private UserRepository userRepository;
@@ -92,10 +94,6 @@ public class UserServiceImp implements UserService {
 	}
 
 
-	@Override
-	public String getUsersFiltred() {
-		return null;
-	}
 
 	@Override
 	public User getUserConnect(HttpServletRequest httpServletRequest) {

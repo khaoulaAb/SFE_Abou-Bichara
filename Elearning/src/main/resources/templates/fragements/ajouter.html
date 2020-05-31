@@ -1,5 +1,5 @@
 <form  th:action="@{/users/create}" method="post" data-th-fragment="ajouter">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModalUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="card-header">
@@ -21,14 +21,14 @@
 
                     <div class="form-group">
 
-                            <input type="radio" id="F" name="genre" value="F"
-                                   checked>
-                            <label for="F">F</label>
+                        <input type="radio" id="F" name="genre" value="F"
+                               checked>
+                        <label for="F">F</label>
 
 
 
-                            <input type="radio" id="M" name="genre" value="M">
-                            <label for="M">M</label>
+                        <input type="radio" id="M" name="genre" value="M">
+                        <label for="M">M</label>
 
                     </div>
 
@@ -43,7 +43,7 @@
 
                     <div class="form-group">
                         <label for="role" class="form-control-label">Role:</label><br>
-                        <select name="role" id="role"  required="">
+                        <select class="form-group" name="role" id="role"  required="">
                             <option th:each="role: ${roles}"
                                     th:value="${role.id}"
                                     th:text="${role.role}"/>
@@ -59,4 +59,3 @@
         </div>
     </div>
 </form>
-

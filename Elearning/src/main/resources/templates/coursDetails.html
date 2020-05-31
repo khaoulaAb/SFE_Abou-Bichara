@@ -18,6 +18,7 @@
         <div class = "container" th:each="cours: ${cours}" >
 
             <a th:href="@{'/downloadfilesaszip/'+${cours.id}}" title="Télécharger tous les fichiers (.zip)" style="float: right;"><i class="fa fa-file-archive-o" aria-hidden="true" style="font-size: 32px;"></i></a>
+            <br>
             <h2  th:text="${cours.getTitre()}" style="color:darkblue; text-align: center"></h2>
 
             <br>
@@ -106,7 +107,7 @@
 
                         </p>
 
-                        <span class="be-comment-time" style="float: right" >
+                        <span class="be-comment-time" style="float: right" th:if="${Listremarque.getUser().email== #authentication.getPrincipal().getUsername() or Listremarque.getCours().user.email==#authentication.getPrincipal().getUsername() }" >
                             <a  class="btn btn-danger btn-sm btnDel"  th:href="@{'/cours/coursDetails/'+${cours.id}+'/delete/'+${Listremarque.id}}"><i class="fa fa-remove"></i></a></td>
 
 				        </span>

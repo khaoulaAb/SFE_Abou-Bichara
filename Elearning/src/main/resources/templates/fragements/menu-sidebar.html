@@ -1,37 +1,39 @@
+
 <nav id="sidebar"  data-th-fragment="menu-sidebar">
     <div class="p-4 pt-5" style="position: fixed; width: 300px;" >
 
-        <!-- <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getRole().getRole()}" ></p>
-         <p href="#" class="img logo rounded-circle mb-5" th:text="${usersConn.getNom()}+' '+${usersConn.getPrenom()}" ></p>-->
-
-
-        <ul class="list-unstyled components mb-5">
-            <img style="width:170%;margin-left: -38%; margin-top:-20%; " th:src="${'images/Logoo.png'}" alt="image" >
 <br>
+        <a href="#" class="img logo " style="background-image: url(/images/Logoo.png); width:170%;margin-left: -38%; margin-top:-20%; border-radius: 100%"></a>
+        <ul class="list-unstyled components mb-5">
+           <!-- <img style="width:170%;margin-left: -38%; margin-top:-20%; " th:src="${'images/eLogo.png'}" alt="image" >
+-->
+         <br>
             <p class="profile-name" style=" text-align: center " sec:authentication="name"></p>
 
             <small style="text-align: center " sec:authentication="principal.authorities" class="designation text-muted"></small>
             <span class="status-indicator online"></span>
             <br><br>
+
+
             <li>
                 <a th:href="@{/}">Accueil</a>
             </li>
 
 
             <li  sec:authorize="hasRole('ROLE_ADMIN')" >
-                <a th:href="@{/users}"> <!--th:if="${usersConn.getRole().getRole()=='ADMIN'}"-->Utilisateur</a>
+                <a th:href="@{/users}"> Utilisateur</a>
             </li>
-
-            <li>
-                <a th:href="@{/cours}">Cours</a>
-            </li>
-
-            <li sec:authorize="hasRole('ROLE_ADMIN') or  hasRole('ROLE_PROF')">
-                <a th:href="@{/votreCours}">Votre Cours</a>
-            </li>
-
             <li  sec:authorize="hasRole('ROLE_ADMIN')" >
                 <a th:href="@{/filieres}">Filières</a>
+            </li>
+            <li>
+                <a th:href="@{/cours}">Tous les Cours</a>
+            </li>
+            <li>
+                <a th:href="@{/coursParFiliere}">Cours par Filières</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN') or  hasRole('ROLE_PROF')">
+                <a th:href="@{/votreCours}">Votre Cours</a>
             </li>
             <li>
                 <a th:href="@{/tchat}">Forum</a>
@@ -40,10 +42,14 @@
         </ul>
 <br> <br>
         <div class="footer">
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <p>
                 Copyright &copy;<script>document.write(new Date().getFullYear());</script> EST-ESSAOUIRA  <i class="fa fa-book"></i> E-learning<i class="fa fa-laptop"></i>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </p>
         </div>
 
     </div>
 </nav>
+
+
+
+

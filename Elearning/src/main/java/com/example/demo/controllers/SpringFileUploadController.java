@@ -123,7 +123,7 @@ public class SpringFileUploadController {
     @GetMapping("/cours/coursDetails/{coursId}")
     public String CoursDetails(@PathVariable Long coursId, Model model){
 
-        Cours cours = coursService.findById(coursId);
+        Cours cours = coursRepository.findById(coursId).get();
         List<CoursFiles> coursFiles= coursService.findFilesbyCoursId(coursId);
 
         model.addAttribute("cours", cours);
@@ -141,7 +141,7 @@ public class SpringFileUploadController {
 
     @PostMapping("/cours/coursDetails/{coursId}/save")
     public String saveRemarque(@PathVariable Long coursId,@ModelAttribute Remarque remarque,RedirectAttributes redirectAttributes,HttpServletRequest httpServletRequest){
-        Cours cours = coursService.findById(coursId);
+        Cours cours = coursRepository.findById(coursId).get();
         User u = userService.getUserConnect(httpServletRequest);
 
         remarque.setCours(cours);
@@ -156,8 +156,14 @@ public class SpringFileUploadController {
 
     @GetMapping("/cours/coursDetails/{coursId}/delete/{RemId}")
     public String deleteRem(@PathVariable Long RemId, RedirectAttributes redirectAttributes){
-        remarqueRepository.deleteById(RemId);
-        redirectAttributes.addFlashAttribute("successmessage","commentaire a été supprimé");
+       Remarque remarque= coursService.findByIdrem(RemId);
+       if(remarque!=null) {
+           remarqueRepository.deleteById(RemId);
+           redirectAttributes.addFlashAttribute("successmessage", "commentaire a été supprimé");
+
+       }
+        else
+            return "redirect:/erreur";
 
         return "redirect:/cours/coursDetails/{coursId}";
     }
@@ -223,6 +229,7 @@ public class SpringFileUploadController {
         List<Filiere> filieres= filiereRepository.findAll();
         model.addAttribute("filieres",filieres);
         model.addAttribute("Listcours",Listcours);
+        model.addAttribute("desc","hello");
 
         return "vosCours";
     }
@@ -237,7 +244,7 @@ public class SpringFileUploadController {
 
         List<Filiere> filieres= filiereRepository.findAll();
         model.addAttribute("filieres",filieres);
-        return "/votreCours";
+        return "/vosCours";
     }
 
 
@@ -260,6 +267,35 @@ public class SpringFileUploadController {
 
     }
 
+    @GetMapping("/coursParFiliere")
+    public String coursParFiliere(Model model){
+        model.addAttribute("filieres", filiereRepository.findAll());
 
 
+
+        return "CoursParFr";
+    }
+
+    @GetMapping("/coursParFiliere/{idF}/cours")
+    public String coursfr(@PathVariable Long idF,Model model){
+        List<Cours> Listcours = coursService.getCoursByFiliere(idF);
+        model.addAttribute("cours", new Cours());
+        model.addAttribute("coursfiles",new ArrayList<CoursFiles>());
+        // model.addAttribute("isAdd",true);
+
+        List<Filiere> filieres= filiereRepository.findAll();
+        model.addAttribute("filieres",filieres);
+        model.addAttribute("Listcours",Listcours);
+
+        return "listCoursParFr";
+    }
+
+
+    @GetMapping("/cours/description")
+    public String DescriptionCours(@PathVariable Long idC,Model model){
+        Cours cours = coursService.findById(idC);
+
+
+        return "/vosCours";
+    }
 }

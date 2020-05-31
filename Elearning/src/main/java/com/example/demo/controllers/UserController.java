@@ -1,8 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.*;
+import com.example.demo.repository.CoursRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.CoursService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -34,15 +33,20 @@ private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private CoursRepository coursRepository;
+
+    @Autowired
+    private CoursService coursService;
+
+
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
     @GetMapping("/users")
     public String dashboard(Model model,HttpServletRequest httpServletRequest) {
         //display all Tasks
 
         List<User> users = userService.getListUsers(httpServletRequest);
-        Role role= roleRepository.findById(Long.parseLong("2")).get();
-        Set<User> userEtu =userService.getUserByRole(role);
-        model.addAttribute("userEtu", userEtu);
+
         model.addAttribute("roles",roleRepository.findAll());
         model.addAttribute("users", users);
 
@@ -57,7 +61,40 @@ private UserRepository userRepository;
     public String index(Model model,HttpServletRequest httpServletRequest) {
 
         User u = userService.getUserConnect(httpServletRequest);
-        model.addAttribute("usersConn",u);
+        Set<User> userEtu =userService.getUserByRole(roleRepository.findById(Long.parseLong("3")).get());
+        model.addAttribute("userEtu", userEtu);
+
+        Set<User> userProf =userService.getUserByRole(roleRepository.findById(Long.parseLong("2")).get());
+        model.addAttribute("userProf", userProf);
+        model.addAttribute("cours", coursRepository.findAll());
+
+        /******* Etudiants et Professeurs */
+        Map<String, Integer> graphData = new TreeMap<>();
+        graphData.put("Professeurs", userProf.size());
+        graphData.put("Etudiants", userEtu.size());
+        model.addAttribute("chartData", graphData);
+
+        /* F et M dans les Etudiants */
+        int f=0;
+        int m=0;
+        for ( User EtuF: userEtu ){
+            if(EtuF.getGenre().equals("F")){
+                f++;
+            }
+            else m++;
+        }
+        Map<String, Integer> graphGenre = new TreeMap<>();
+        graphData.put("F", f);
+        graphData.put("M", m);
+        System.out.print(f+' '+m);
+        model.addAttribute("graphGenre", graphGenre);
+
+        Map<String,Integer> barChartData = new HashMap<>();
+        barChartData.put("F",f);
+        barChartData.put("M",m);
+        model.addAttribute("barChartData",barChartData);
+        model.addAttribute("pass", 50);
+        model.addAttribute("fail", 50);
         return "index";
     }
 
@@ -108,8 +145,26 @@ private UserRepository userRepository;
 
     @RequestMapping(path = "/users/{id}/delete", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") long id, HttpServletRequest request,RedirectAttributes redirectAttributes){
-        userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été supprimé");
+        List<Cours> cours= coursService.getCoursByUser(id);
+        if(cours!=null) {
+
+                for (Cours c : cours) {
+                    if (c.getRemarques() != null) {
+                        coursService.deleteRemarquesByCours(c.getId());
+                    }
+                    if (c.getFiles() != null) {
+                        coursService.deleteFilesByCoursId(c.getId());
+                    }
+                    coursService.deleteCours(c.getId());
+                }
+            }
+
+                userService.deleteUser(id);
+
+
+            redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été supprimé");
+
+
 
         return "redirect:/users";
     }
