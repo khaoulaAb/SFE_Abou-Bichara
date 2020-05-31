@@ -1,96 +1,99 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Custom messanger</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-    <!--    libs for stomp and sockjs-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <!--    end libs for stomp and sockjs-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
-          type="text/css">
-    <link href="/css/chat.css" rel="stylesheet">
+    <title>E-learning</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/remarque.css">
+
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js" ></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+
+    <link rel="stylesheet" href="/css/upCours.css">
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" src="/js/chart.js" ></script>
+
+    <link rel="stylesheet" href="/css/chat.css" />
+
 </head>
 <body>
-<div class="container clearfix">
+    <noscript>
+        <h2>Sorry! Your browser doesn't support Javascript</h2>
+    </noscript>
+    <div id="username-page">
+        <div class="username-page-container">
+            <h1 class="title">Binvenue</h1>
+            <form id="usernameForm" name="usernameForm">
+                <div class="form-group">
+                    <input type="hidden" id="name" placeholder="Username" th:value="${user.getNom()+' '+user.getPrenom()}"
+                           autocomplete="off" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="accent username-submit">Commencer
+                        le chat</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <div class="container clearfix">
-        <div class="people-list" id="people-list">
-            <div class="search">
-                <input id="userName" placeholder="search"  th:value="${user.nom}+''+${user.prenom}" type="hidden"/>
-                <button >Enter the chat</button>
-                <button onclick="fetchAll()">Refresh</button>
+
+    <div class="wrapper d-flex align-items-stretch">
+        <div data-th-replace="fragements/menu-sidebar :: menu-sidebar"></div>
+
+        <div id="content" class="p-4 p-md-5">
+            <div data-th-replace="fragements/menu-navbar :: menu-navbar"></div>
+
+
+            <div id="chat-page" class = "container hidden" >
+                <div class="row">
+
+                    <div class="card col-sm-12 " >
+
+                        <div  class=" overflow-auto" style="height: 500px">
+                            <div class="chat-container">
+                                <div class="chat-header">
+                                    <h2>E-Learning </h2>
+                                </div>
+                                <div class="connecting">Connecting...</div>
+                                <ul id="messageArea">
+
+                                </ul>
+                                <form id="messageForm" name="messageForm" nameForm="messageForm">
+                                    <div class="form-group">
+                                        <div class="input-group clearfix">
+                                            <input type="text" id="message" placeholder="Taper un message"
+                                                   autocomplete="off" class="form-control" />
+                                            <button type="submit" class="primary"><i class="fa fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
             </div>
-            <ul class="list" id="usersList">
-
-
-            </ul>
         </div>
+    </div>
 
-    <div class="chat">
-        <div class="chat-header clearfix">
-            <img alt="avatar" height="55px"
-                 src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
-                 width="55px"/>
+    <div data-th-replace="fragements/script :: script"></div>
 
-            <div class="chat-about">
-                <div id="selectedUserId" class="chat-with"></div>
-                <div class="chat-num-messages"></div>
-            </div>
-            <i class="fa fa-star"></i>
-        </div> <!-- end chat-header -->
-
-        <div class="chat-history">
-            <ul>
-
-
-
-            </ul>
-
-        </div> <!-- end chat-history -->
-
-        <div class="chat-message clearfix">
-            <textarea id="message-to-send" name="message-to-send" placeholder="Type your message" rows="3"></textarea>
-
-            <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
-            <i class="fa fa-file-image-o"></i>
-
-            <button id="sendBtn">Send</button>
-
-        </div> <!-- end chat-message -->
-
-    </div> <!-- end chat -->
-
-</div> <!-- end container -->
-
-<script id="message-template" type="text/x-handlebars-template">
-    <li class="clearfix">
-        <div class="message-data align-right">
-            <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
-            <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
-        </div>
-        <div class="message other-message float-right">
-            {{messageOutput}}
-        </div>
-    </li>
-</script>
-
-<script id="message-response-template" type="text/x-handlebars-template">
-    <li>
-        <div class="message-data">
-            <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
-            <span class="message-data-time">{{time}}, Today</span>
-        </div>
-        <div class="message my-message">
-            {{response}}
-        </div>
-    </li>
-</script>
-
-<script src="/js/chat1.js"></script>
-<script src="/js/chat.js"></script>
 </body>
 </html>

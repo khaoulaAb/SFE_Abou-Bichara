@@ -46,8 +46,8 @@
                     </div>
                 </div>
 
-
-                <div class="col-sm-4"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension=='jpeg' or file.fileExtension=='png'or file.fileExtension=='jpg' or file.fileExtension=='tiff' or file.fileExtension=='gif' }">
+               <div class="col-sm-12">
+                    <div class="col-sm-4"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension=='jpeg' or file.fileExtension=='png'or file.fileExtension=='jpg' or file.fileExtension=='tiff' or file.fileExtension=='gif' }">
 
                     <div class="card text-dark bg-light">
                         <div class="card-body"  style="height: 400px; ">
@@ -61,7 +61,7 @@
                     </div>
 
                 </div>
-
+                </div>
                 <div class="col-sm-3"  style="margin-bottom: 5%" th:each="file:${coursfiles}" th:if="${file.fileExtension!='jpeg' and file.fileExtension!='mp4' and file.fileExtension!='png'and file.fileExtension!='jpg' and file.fileExtension!='tiff' and file.fileExtension!='gif' }">
                     <div class="card text-dark bg-light">
                         <div class="card-body"  style="height: 150px">
