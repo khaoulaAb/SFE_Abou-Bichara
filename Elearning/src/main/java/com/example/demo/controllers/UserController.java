@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.*;
 import com.example.demo.repository.CoursRepository;
+import com.example.demo.repository.FiliereRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.CoursService;
@@ -39,6 +40,9 @@ private UserRepository userRepository;
     @Autowired
     private CoursService coursService;
 
+    @Autowired
+    private FiliereRepository filiereRepository;
+
 
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
     @GetMapping("/users")
@@ -67,6 +71,8 @@ private UserRepository userRepository;
         Set<User> userProf =userService.getUserByRole(roleRepository.findById(Long.parseLong("2")).get());
         model.addAttribute("userProf", userProf);
         model.addAttribute("cours", coursRepository.findAll());
+        model.addAttribute("filieres", filiereRepository.findAll());
+
 
         /******* Etudiants et Professeurs */
         Map<String, Integer> graphData = new TreeMap<>();
@@ -83,18 +89,21 @@ private UserRepository userRepository;
             }
             else m++;
         }
-        Map<String, Integer> graphGenre = new TreeMap<>();
-        graphData.put("F", f);
-        graphData.put("M", m);
-        System.out.print(f+' '+m);
-        model.addAttribute("graphGenre", graphGenre);
 
-        Map<String,Integer> barChartData = new HashMap<>();
-        barChartData.put("F",f);
-        barChartData.put("M",m);
-        model.addAttribute("barChartData",barChartData);
-        model.addAttribute("pass", 50);
-        model.addAttribute("fail", 50);
+        Map<String, Integer> graphData2 = new TreeMap<>();
+        graphData2.put("Etudiantes", f);
+        graphData2.put("Etudiants", m);
+        model.addAttribute("chartData2", graphData2);
+
+
+        Map<String, Integer> graphData3 = new TreeMap<>();
+        for(Filiere filiere: filiereRepository.findAll()){
+            graphData3.put(filiere.getAbr(),filiere.getCours().size());
+        }
+        model.addAttribute("chartData3", graphData3);
+
+
+
         return "index";
     }
 
@@ -125,11 +134,15 @@ private UserRepository userRepository;
                                 BindingResult result, Model model,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             user.setId(id);
+            model.addAttribute("roles",roleRepository.findAll());
             return "UserUpdate";
         }
+
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
+
         user.setPassword(encoder.encode(user.getPassword()));
+
         user.setCreatedDate(new Date());
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
@@ -137,7 +150,7 @@ private UserRepository userRepository;
 
         redirectAttributes.addFlashAttribute("successmessage","Utilisateur a été modifié");
 
-        return "users";
+        return "redirect:/users";
     }
 
 
@@ -187,6 +200,7 @@ private UserRepository userRepository;
                     ||(all.get(i).getPrenom().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getPrenom(),s))
                     ||(all.get(i).getRole().getRole().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getRole().getRole(),s))
                     ||(all.get(i).getEmail().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getEmail(),s))
+                    ||(all.get(i).getGenre().equalsIgnoreCase(s))||(containsIgnoreCase(all.get(i).getGenre(),s))
 
             ) {
                 l.add(all.get(i));

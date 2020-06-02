@@ -17,164 +17,243 @@
                 <br>
 
             <div class="row" style="margin-bottom: 4%">
-                    <div class="col-sm-4">
-                        <div class="card text-white bg-primary"  >
-                            <div class="card-header">Header</div>
-                            <div class="card-body">
-                                <h5 class="card-title">Primary card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-sm-4">
-                        <div class="card text-white bg-secondary"  >
-                            <div class="card-header">Header</div>
-                            <div class="card-body">
-                                <h5 class="card-title">Primary card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
+                <div class="col-sm-3">
+                    <div class="card "  style="color: black; background-color:#b1dfbb ">
+                        <div class="card-header">
+                            <h6 class="card-title text-center">Nombre de cours</h6>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-text text-center" th:text="${cours.size()}"></h2>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="card text-white bg-success"  >
-                            <div class="card-header">Header</div>
-                            <div class="card-body">
-                                <h5 class="card-title">Primary card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card "  style="color: black; background-color: #ff5c33">
+                        <div class="card-header">
+                            <h6 class="card-title text-center">Nombre de Filières</h6>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-text text-center" th:text="${filieres.size()}"></h2>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="card" style="color: black; background-color:  #ffff99"  >
+                        <div class="card-header">
+                            <h6 class="card-title text-center">Nombre d etudiants</h6>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-text text-center" th:text="${userEtu.size()}"></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card "  style="color: black; background-color: #1ABB9C">
+                        <div class="card-header">
+                            <h6 class="card-title text-center">Nombre d professeurs</h6>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-text text-center" th:text="${userProf.size()}"></h2>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         <br>
 
-            <div class="row" style="margin-bottom: 4%">
-                <div class="col-sm-12">
-                    <div class="card "  >
+            <div class="row" >
+
+                <div class="col-sm-12" style=" margin-bottom: 4%">
+                    <div class="card ">
                         <div class="card-body">
-                            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            <h3 style="text-align: center; color: green ">Nombre d etudiants et d etudiantes </h3>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-6"  >
+                                    <div class="card "  >
+                                        <div class="card-body">
+                                            <div id="piechart1"  ></div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6" >
+                                    <div class="card "  >
+                                        <div class="card-body">
+                                            <div id="chart_div1" ></div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
+                </div>
+                <div class="col-sm-12" style=" margin-bottom: 5%">
+                    <div class="card ">
+                        <div class="card-body">
+                            <h3 style="text-align: center; color: olivedrab; margin-bottom: 2%">Nombre d etudiants et de professeurs </h3>
+                            <div class="row">
+                                <div class="col-sm-6"  >
+                                    <div class="card "  >
+                                        <div class="card-body">
+                                            <div id="chart_div" ></div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6" >
+                                    <div class="card "  >
+                                        <div class="card-body">
+                                            <div id="piechart"  ></div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-sm-12" align="center" style="width: 1000px;">
+                    <div class="card ">
+                        <div class="card-body">
+                            <div >
+                                <h3 style="text-align: center; color: olive">Nombre de cours dans chaque filiere</h3>
+                                <div id="piechart2"  style="width: 800px; height: 400px;"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
                     <script th:inline="javascript">
-                        $(function(){
-                            Highcharts.chart('container', {
-                                chart: {
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'Masculins et Féminins (Etudiants)'
-                                },
+                        var real_data = /*[[${chartData}]]*/'noValue';
+                        var real_data1 = /*[[${chartData2}]]*/'noValue';
+                        var real_data2 = /*[[${chartData3}]]*/'noValue';
 
-                                xAxis: {
-                                    categories: [[${barChartData.keySet()}]],
-                                    crosshair: true
-                                },
-                                yAxis: {
-                                    min: 0,
-                                    title: {
-                                        text: 'Nombre d Etudiants'
-                                    }
-                                },
-                                tooltip: {
-                                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                                    footerFormat: '</table>',
-                                    shared: true,
-                                    useHTML: true
-                                },
-                                plotOptions: {
-                                    column: {
-                                        pointPadding: 0.2,
-                                        borderWidth: 0
-                                    }
-                                },
-                                series: [{
-                                    name: 'Etudiants',
-                                    data: [[${barChartData.values()}]]
-
-                                }]
+                        $(document).ready(function() {
+                            google.charts.load('current', {
+                                packages : [ 'corechart', 'bar' ]
                             });
+                            google.charts.setOnLoadCallback(drawPieChart);
+                            google.charts.setOnLoadCallback(drawPieChart1);
+                            google.charts.setOnLoadCallback(drawPieChart2);
+                            google.charts.setOnLoadCallback(drawColumnChart);
+                            google.charts.setOnLoadCallback(drawColumnChart1);
+
+
                         });
+
+                        function drawPieChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Type d utilisateurs');
+                            data.addColumn('number', 'Nombre de chaque type');
+                            Object.keys(real_data).forEach(function(key) {
+                                data.addRow([ key, real_data[key] ]);
+                            });
+                            var options = {
+                                title : ''
+                            };
+                            var chart = new google.visualization.PieChart(document
+                                .getElementById('piechart'));
+                            chart.draw(data, options);
+                        }
+                        function drawColumnChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Type d utilisateurs');
+                            data.addColumn('number', 'Nombre de chaque type');
+                            Object.keys(real_data).forEach(function(key) {
+                                data.addRow([ key, real_data[key] ]);
+                            });
+                            var options = {
+                                title : '',
+                                hAxis : {
+                                    title : 'Type d utilisateurs',
+                                },
+                                vAxis : {
+                                    title : 'Nombre de chaque type'
+                                }
+                            };
+                            var chart = new google.visualization.ColumnChart(document
+                                .getElementById('chart_div'));
+                            chart.draw(data, options);
+                        }
+
+
+
+                        function drawPieChart1() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Type d etudiants');
+                            data.addColumn('number', 'Nombre de chaque type');
+                            Object.keys(real_data1).forEach(function(key) {
+                                data.addRow([ key, real_data1[key] ]);
+                            });
+                            var options = {
+                                title : ''
+                            };
+                            var chart = new google.visualization.PieChart(document
+                                .getElementById('piechart1'));
+                            chart.draw(data, options);
+                        }
+                        function drawColumnChart1() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Type d etudiants');
+                            data.addColumn('number', 'Nombre de chaque type');
+                            Object.keys(real_data1).forEach(function(key) {
+                                data.addRow([ key, real_data1[key] ]);
+                            });
+                            var options = {
+                                title : '',
+                                hAxis : {
+                                    title : 'Type d etudiants',
+                                },
+                                vAxis : {
+                                    title : 'Nombre de chaque type'
+                                }
+                            };
+                            var chart = new google.visualization.ColumnChart(document
+                                .getElementById('chart_div1'));
+                            chart.draw(data, options);
+                        }
+
+
+                        function drawPieChart2() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Filieres');
+                            data.addColumn('number', 'Nombre de cours');
+                            Object.keys(real_data2).forEach(function(key) {
+                                data.addRow([ key, real_data2[key] ]);
+                            });
+                            var options = {
+                                title : '',
+
+                            };
+                            var chart = new google.visualization.PieChart(document
+                                .getElementById('piechart2'));
+                            chart.draw(data, options);
+                        }
+
+
                     </script>
 
-                </div>
 
-                <div >
-                    <figure class="highcharts-figure">
-                        <div id="EtuFM"></div>
-                        <p class="highcharts-description">
-                            Pie charts are very popular for showing a compact overview of a
-                            composition or comparison. While they can be harder to read than
-                            column charts, they remain a popular choice for small datasets.
-                        </p>
-                    </figure>
-                    <script th:inline="javascript">
-                        Highcharts.chart('EtuFM', {
-                            chart: {
-                                plotBackgroundColor: null,
-                                plotBorderWidth: null,
-                                plotShadow: false,
-                                type: 'pie'
-                            },
-                            title: {
-                                text: 'Browser market shares in January, 2018'
-                            },
-                            tooltip: {
-                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                            },
-                            accessibility: {
-                                point: {
-                                    valueSuffix: '%'
-                                }
-                            },
-                            plotOptions: {
-                                pie: {
-                                    allowPointSelect: true,
-                                    cursor: 'pointer',
-                                    dataLabels: {
-                                        enabled: true,
-                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                                    }
-                                }
-                            },
-                            series: [{
-                                name: 'Brands',
-                                colorByPoint: true,
-                                data: [{
-                                    name: 'Chrome',
-                                    y: 61.41,
-                                    sliced: true,
-                                    selected: true
-                                }, {
-                                    name: 'Internet Explorer',
-                                    y: 11.84
-                                }, {
-                                    name: 'Firefox',
-                                    y: 10.85
-                                }, {
-                                    name: 'Edge',
-                                    y: 4.67
-                                }, {
-                                    name: 'Safari',
-                                    y: 4.18
-                                }, {
-                                    name: 'Sogou Explorer',
-                                    y: 1.64
-                                }, {
-                                    name: 'Opera',
-                                    y: 1.6
-                                }, {
-                                    name: 'QQ',
-                                    y: 1.2
-                                }, {
-                                    name: 'Other',
-                                    y: 2.61
-                                }]
-                            }]
-                        });
-                    </script>
-                </div>
+
 
 
         </div>

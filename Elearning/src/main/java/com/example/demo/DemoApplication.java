@@ -22,17 +22,12 @@ public class DemoApplication {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         ApplicationContext ctx=SpringApplication.run(DemoApplication.class, args);
-/*
 
+/*
         RoleRepository roleRepository=ctx.getBean(RoleRepository.class);
         roleRepository.save(new Role("ADMIN", "administrateur"));
         roleRepository.save(new Role("PROF", "professeur"));
         roleRepository.save(new Role("ETUDIANT", "etudiant"));
-
-
-        UserRepository userRepository=ctx.getBean(UserRepository.class );
-        userRepository.save(new User("admin@gmail.com", encoder.encode("admin123456789"),"ab", "kh","F",true));
-
 
         FiliereRepository filiereRepository = ctx.getBean(FiliereRepository.class);
         filiereRepository.save(new Filiere("GI1","Génie Informatique 1"));
@@ -51,10 +46,13 @@ public class DemoApplication {
         filiereRepository.save(new Filiere("LP-ISIL","LP Ingénieriedes Systemes Informatiques Et Logiciels"));
         filiereRepository.save(new Filiere("LP-MT","LP Management Bancaire et Financier"));
         filiereRepository.save(new Filiere("LP-ERDD","LP Energies Renouvelables et Développement Durable (ERDD)"));
-        filiereRepository.save(new Filiere("LP-MBF","LP MBF"));
+        filiereRepository.save(new Filiere("LP-MBF","LP  Management Bancaire et Financier"));
         filiereRepository.save(new Filiere("LP-MGE","LP Modélisation et Gestion de l'Environnement"));
 */
-
+/*
+        UserRepository userRepository=ctx.getBean(UserRepository.class );
+        userRepository.save(new User("admin@gmail.com", encoder.encode("admin123456789"),"ab", "kh","F",true));
+*/
     }
 
 }
