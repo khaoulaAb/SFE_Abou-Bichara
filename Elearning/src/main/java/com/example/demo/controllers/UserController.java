@@ -116,6 +116,39 @@ private UserRepository userRepository;
     }
 
 
+
+    @GetMapping("/findUserConn")
+    public String editUserConn(HttpServletRequest httpServletRequest, Model model){
+        User user = userService.getUserConnect(httpServletRequest);
+
+        model.addAttribute("user", user);
+
+        return "profil";
+    }
+    @PostMapping("/updateUserConn/{id}")
+    public String updateUserConn(@PathVariable("id") long id, @Valid User user,
+                             BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+
+
+        User u= userRepository.findById(id).get();
+
+
+        user.setActived(true);
+        user.setEmail(u.getEmail());
+        user.setRole(u.getRole());
+
+        user.setPassword(u.getPassword());
+        user.setCreatedDate(new Date());
+        userRepository.save(user);
+        model.addAttribute("users", userRepository.findAll());
+
+
+        redirectAttributes.addFlashAttribute("successmessage","votre informations a été modifié");
+
+        return "redirect:/findUserConn";
+    }
+
+
     @GetMapping("/users/findUser/{id}")
     public String edituser(@PathVariable Long id, Model model){
         User user = userRepository.findById(id)
@@ -127,22 +160,14 @@ private UserRepository userRepository;
         return "UserUpdate";
     }
 
-
-
     @PostMapping("/users/update/{id}")
     public String updateUser(@PathVariable("id") long id, @Valid User user,
                                 BindingResult result, Model model,RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            model.addAttribute("roles",roleRepository.findAll());
-            return "UserUpdate";
-        }
 
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        User u= userRepository.findById(id).get();
 
 
-        user.setPassword(encoder.encode(user.getPassword()));
-
+        user.setPassword(u.getPassword());
         user.setCreatedDate(new Date());
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());

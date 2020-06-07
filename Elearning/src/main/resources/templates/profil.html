@@ -25,22 +25,28 @@
         <div class="container">
 
             <div class="row">
-
                 <div class="col-md-9 offset-md-1 ">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${message}">
+                        <strong th:text="${message}"></strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successmessage}">
+                        <strong th:text="${successmessage}"></strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <!-- form card register -->
                     <div class="card bg-light text-dark ">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${message}">
-                            <strong th:text="${message}"></strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                         <div class="card-header border border-left-0 border-right-0 border-top-0 border-warning">
                             <h3 class="text-center ">Modifier</h3>
                         </div>
                         <div class="card-body">
 
-                            <form th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data" class="form" role="form" autocomplete="off">
+                            <form th:action="@{/updateUserConn/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data" class="form" role="form" autocomplete="off">
 
                                 <div class="form-group">
                                     <label for="nom" class="form-control-label">Nom:</label>
@@ -66,41 +72,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email" class="form-control-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" th:field="*{email}" value=""  required=""/>
-                                </div>
-                                <div class="form-group">
                                     <label for="password" class="form-control-label">Password:</label>
                                     <input type="password" class="form-control" id="password" th:field="*{password}" value=""  />
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="role" class="form-control-label">Role:</label><br>
-                                    <select class="form-group" th:field="*{role}" id="role"  required="">
-                                        <option th:each="role: ${roles}"
-                                                th:value="${role.id}"
-                                                th:text="${role.role}"/>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-
-                                    <input type="radio" id="Actived" th:field="*{actived}"  value="true"
-                                           checked>
-                                    <label for="Actived">activé</label>
-
-
-
-                                    <input type="radio" id="NotActived" th:field="*{actived}" value="false">
-                                    <label for="NotActived">non activé</label>
-
-                                </div>
 
 
 
                                 <div class="form-group">
 
-                                    <a class="btn btn-secondary float-left" th:href="@{/users}"> annuler</a>
+                                    <a class="btn btn-secondary float-left" th:href="@{/}"> annuler</a>
                                     <button type="submit" class="btn btn-primary btn-lg float-right" >Enregistrer</button>
 
                                 </div>
